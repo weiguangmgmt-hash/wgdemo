@@ -16,26 +16,18 @@ body{font-family:"Noto Sans TC","PingFang TC","Helvetica Neue",Arial,sans-serif;
   background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
 .serif{font-family:"Cormorant Garamond","Times New Roman",Georgia,serif}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-
-/* Header */
 header{padding:34px 0 18px;text-align:center;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--bg))}
 .logo-mark{margin:0 auto 6px}
-.brand-en{font-family:"Cormorant Garamond",Georgia,serif;font-size:34px;letter-spacing:10px;
-  color:var(--gold4);font-weight:600;margin-left:10px}
+.brand-en{font-family:"Cormorant Garamond",Georgia,serif;font-size:34px;letter-spacing:10px;color:var(--gold4);font-weight:600;margin-left:10px}
 .brand-sub{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:18px;color:var(--gold);letter-spacing:2px;margin-top:-2px}
 .brand-zh{font-size:15px;letter-spacing:9px;color:var(--muted);margin-top:8px}
 .dash-title{margin-top:14px;font-size:13px;letter-spacing:3px;color:var(--muted)}
-
-/* Tabs */
 nav{display:flex;justify-content:center;gap:6px;margin:22px 0 26px;flex-wrap:wrap}
-.tab{padding:10px 26px;border:1px solid var(--line);background:#fff;border-radius:999px;
-  cursor:pointer;font-size:14px;color:var(--muted);letter-spacing:2px;transition:.2s}
+.tab{padding:10px 26px;border:1px solid var(--line);background:#fff;border-radius:999px;cursor:pointer;font-size:14px;color:var(--muted);letter-spacing:2px;transition:.2s}
 .tab:hover{border-color:var(--gold)}
 .tab.active{background:var(--gold);color:#fff;border-color:var(--gold);box-shadow:var(--shadow)}
-
-/* KPI */
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
+.kpi{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
 .kpi .lab{font-size:12px;color:var(--muted);letter-spacing:1px}
 .kpi .val{font-size:28px;font-weight:700;margin-top:8px;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;letter-spacing:.5px}
 .kpi .val small{font-size:14px;color:var(--gold4);font-family:inherit}
@@ -43,33 +35,56 @@ nav{display:flex;justify-content:center;gap:6px;margin:22px 0 26px;flex-wrap:wra
 .kpi.hl{background:linear-gradient(135deg,var(--gold),var(--gold4));border:none}
 .kpi.hl .lab,.kpi.hl .sub{color:rgba(255,255,255,.85)}
 .kpi.hl .val{color:#fff}
-
-/* Cards / charts */
+.ai-btn{margin-top:14px;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;letter-spacing:1px;
+  padding:6px 13px;border-radius:999px;cursor:pointer;border:1px solid var(--gold);
+  background:rgba(194,168,120,.10);color:var(--gold4);transition:.18s}
+.ai-btn:hover{background:var(--gold);color:#fff}
+.kpi.hl .ai-btn{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.18);color:#fff}
+.kpi.hl .ai-btn:hover{background:#fff;color:var(--gold4)}
+.ai-btn .sp{font-size:13px;line-height:1}
 .grid{display:grid;gap:18px;margin-bottom:18px}
-.g2{grid-template-columns:1.55fr 1fr}
-.g11{grid-template-columns:1fr 1fr}
+.g2{grid-template-columns:1.55fr 1fr}.g11{grid-template-columns:1fr 1fr}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
 .panel h3{font-size:14px;font-weight:600;letter-spacing:1px;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:8px}
 .panel h3::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--gold);display:inline-block;transform:rotate(45deg)}
 .panel .note{font-size:11px;color:var(--muted);margin-bottom:14px}
-
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}
 th{color:var(--muted);font-weight:500;font-size:11px;letter-spacing:1px}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 tbody tr:hover{background:#FBF8F2}
-.rank{display:inline-flex;width:20px;height:20px;border-radius:6px;background:#F2EBDD;color:var(--gold4);
-  font-size:11px;align-items:center;justify-content:center;font-weight:700;margin-right:8px}
+.rank{display:inline-flex;width:20px;height:20px;border-radius:6px;background:#F2EBDD;color:var(--gold4);font-size:11px;align-items:center;justify-content:center;font-weight:700;margin-right:8px}
 .bar-cell{position:relative}
 .bar-cell .fill{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,rgba(194,168,120,.22),rgba(194,168,120,.05));border-radius:4px;z-index:0}
 .bar-cell span{position:relative;z-index:1}
-
 .legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;font-size:12px;color:var(--muted)}
 .legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:middle}
-.hide{display:none}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 40px;letter-spacing:1px}
-.pill{display:inline-block;font-size:11px;padding:2px 10px;border-radius:999px;background:#F2EBDD;color:var(--gold4);margin-left:6px}
 svg text{font-family:inherit}
+/* ---- AI 洞見 Modal ---- */
+.overlay{position:fixed;inset:0;background:rgba(74,64,54,.42);backdrop-filter:blur(3px);
+  display:none;align-items:flex-start;justify-content:center;z-index:50;padding:40px 18px;overflow-y:auto}
+.overlay.show{display:flex}
+.modal{background:var(--card);max-width:620px;width:100%;border-radius:20px;box-shadow:0 30px 80px rgba(74,64,54,.3);
+  overflow:hidden;animation:pop .22s ease}
+@keyframes pop{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+.m-head{background:linear-gradient(135deg,var(--gold),var(--gold4));color:#fff;padding:22px 26px;position:relative}
+.m-head .ey{font-size:11px;letter-spacing:3px;opacity:.85}
+.m-head .ti{font-size:21px;font-weight:700;margin-top:4px;font-family:"Cormorant Garamond",Georgia,serif;letter-spacing:.5px}
+.m-head .mv{font-size:13px;opacity:.92;margin-top:6px}
+.m-close{position:absolute;top:16px;right:18px;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(255,255,255,.22);color:#fff;font-size:17px;line-height:1}
+.m-close:hover{background:rgba(255,255,255,.4)}
+.m-body{padding:20px 26px 26px}
+.sec{margin-bottom:18px}
+.sec:last-child{margin-bottom:0}
+.sec .h{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--gold4);letter-spacing:1px;margin-bottom:8px}
+.sec .h .ic{width:22px;height:22px;border-radius:7px;background:#F2EBDD;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.sec p{font-size:13.5px;color:var(--ink);line-height:1.75}
+.sec ul{margin:0;padding-left:2px;list-style:none}
+.sec li{font-size:13.5px;color:var(--ink);line-height:1.7;padding-left:22px;position:relative;margin-bottom:7px}
+.sec li::before{content:"▸";position:absolute;left:4px;color:var(--gold);font-size:12px;top:1px}
+.m-foot{border-top:1px solid var(--line);padding:12px 26px;font-size:10.5px;color:var(--muted);letter-spacing:.5px;background:#FCFAF6}
 @media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.g2,.g11{grid-template-columns:1fr}}
 </style>
 </head>
@@ -90,7 +105,6 @@ svg text{font-family:inherit}
   <div class="brand-zh">唯 光 動 物 醫 院</div>
   <div class="dash-title">營 運 儀 表 板　·　ERP DATA DASHBOARD</div>
 </header>
-
 <div class="wrap">
   <nav id="nav">
     <div class="tab active" data-tab="overview">總覽</div>
@@ -100,6 +114,19 @@ svg text{font-family:inherit}
   </nav>
   <div id="app"></div>
   <footer>資料來源：DEMO-ERP（財會 / 庫存 / 銷售）　|　24 個月區間 2024-07 ～ 2026-06　|　金額單位：新台幣　|　本頁離線可用</footer>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="m-head">
+      <button class="m-close" id="mClose" aria-label="關閉">×</button>
+      <div class="ey">✦ AI 經營洞見　·　企業主視角</div>
+      <div class="ti" id="mTitle"></div>
+      <div class="mv" id="mValue"></div>
+    </div>
+    <div class="m-body" id="mBody"></div>
+    <div class="m-foot">※ 洞見由系統依本儀表板實際數據自動產生，供經營決策參考，非投資或財務建議。</div>
+  </div>
 </div>
 
 <script>
@@ -778,186 +805,141 @@ const DATA = {
   ]
  }
 };
+const INSIGHTS = {"revenue": {"t": "總營收", "analysis": "24 個月累計營收 NT$1.89 億,成長動能強——後 6 個月月均 981 萬，較前 6 個月 466 萬大幅成長 +110.6%，2026/06 單月 1,820 萬創新高。但月度極不穩定：最低月僅 68.8 萬、最高 1,820 萬，落差達 26.5 倍。", "source": "早期基期低（業務剛起步）放大了成長率；近月暴衝高度依賴少數大單集中入帳，屬「專案型/大客戶驅動」的脈衝式收入，而非穩定的經常性收入。", "actions": ["以滾動 3 個月移動平均追蹤真實趨勢，避免被單月高峰誤導決策", "拆解 2026/06 高峰的訂單組成，確認成長是否可複製、是否為一次性", "發展合約型/經常性收入（保養、續約、耗材訂閱）以平滑營收波動", "設定月營收預警下限（如 800 萬），低於即啟動業務檢討"]}, "customers": {"t": "交易客戶數", "analysis": "僅 42 家客戶撐起 1.89 億營收，客戶基數偏小。集中度偏高：Top1 茂光電佔 10.9%、Top3 佔 26.9%、Top10 佔 59.2%，對大客戶依賴明顯。", "source": "銷售資源集中投放在少數成熟客戶，新客開發不足（42 家對應 24 個月偏少）。一旦頭部客戶流失或縮單，營收將出現大缺口。", "actions": ["對 Top3 客戶做關係深化與合約綁定，同時分散風險", "設定新客開發 KPI，逐季提高活躍客戶數", "以 ABC 分級重新分配業務時間與資源", "將 Top10 集中度列為董事會級指標，目標逐季下降"]}, "avg_order": {"t": "平均客單價", "analysis": "平均每張銷貨單 NT$51.7 萬，屬高單價 B2B 大額交易；365 張單／42 客戶 ≈ 每客約 8.7 單。客單價高代表單筆波動對營收影響大，也代表交叉/追加銷售有空間。", "source": "高單價來自少量大單，使收入與現金流呈脈衝式；同時顯示尚未充分挖掘既有客戶的加購潛力。", "actions": ["設計組合/套餐方案，提高每張單的品項數與金額", "針對高頻客戶推回購與加購誘因", "分析低於均價的訂單客群，找出可升級的對象"]}, "docs": {"t": "銷貨單數", "analysis": "24 個月共 365 張銷貨單，約每月 15 張、每個工作日不到 1 張，交易頻次低，典型專案型 B2B 型態。", "source": "訂單量由少數大客戶與大專案驅動，頻次低導致現金流呈脈衝式、淡旺月落差大。", "actions": ["提高訂單頻次：推小額補貨、耗材續訂、定期維護", "檢視訂單斷層月份的成因（淡季？人力？）", "以穩定的出貨節奏平滑收入與產能利用率"]}, "inventory_value": {"t": "庫存總值", "analysis": "庫存 NT$1,487 萬，約當 0.94 個月營收的庫存水位，總量尚可；但結構嚴重失衡——原料就佔 73.7%（1,096 萬），成品僅 5.2%（76.7 萬）。", "source": "大量資金壓在原料端，可能來自備料過度、最低採購量（MOQ）、或呆滯料累積；成品偏低顯示以接單後生產（MTO）為主。", "actions": ["對原料做 ABC + 呆滯天數分析，清出 6 個月以上未動用料件", "與供應商談寄售或小批多次交貨，降低備料佔款", "設定原料安全庫存上限，超量即停採", "釋出的現金優先用於降低應付未付壓力"]}, "inventory_items": {"t": "品項數 / 有庫存品項", "analysis": "367 個品項中幾乎全部（366）都有庫存，管理面極廣；而 Top10 品項只佔庫存金額 9.7%，代表金額高度分散在長尾 SKU。", "source": "品項過多且分散，缺乏「零庫存/淘汰」機制（366/367 全有庫存），易累積管理成本與呆滯料。", "actions": ["導入品項生命週期管理，定期淘汰低週轉 SKU", "長尾品項改為按需採購，不常備庫存", "以週轉率（而非金額）篩選呆滯品，逐月清理"]}, "inventory_categories": {"t": "品號分類", "analysis": "5 大分類結構頭重腳輕：原料一枝獨秀佔 73.7%，半成品 11.9%、成品僅 5.2%。價值集中在價值鏈前段。", "source": "備料策略偏重前段原料，後段成品價值未累積即出貨；反映 MTO 模式但也潛藏原料呆滯風險。", "actions": ["檢視各分類的週轉率與毛利貢獻，而非只看金額", "平衡原料備料與成品策略，降低前段壓款", "針對佔比最大的原料分類，優先做呆滯清理"]}, "payable": {"t": "應付帳款", "analysis": "應付帳款 NT$9,150 萬，相當於營收的 48.5%。應付月均從前 6 月 276 萬升至後 6 月 493 萬（+79%），隨業務放量同步擴大。", "source": "營收成長帶動採購與委外增加，屬擴張期的正常現象；關鍵是應付增速（+79%）低於營收增速（+110%），槓桿尚屬健康。", "actions": ["維持「應付增速 < 營收增速」的紀律，定期監控比值", "集中採購量向 Top 供應商談更好的帳期與折讓", "建立應付到期日曆，避免逾期影響供應商信用"]}, "payment_rate": {"t": "已付金額 / 付款率", "analysis": "已付 NT$6,495 萬，付款率 71%，仍有 29%（2,655 萬）未付。付款率不算高，反映現金調度偏緊或刻意延後付款。", "source": "營收呈脈衝式（月波動 26.5 倍）使現金流不穩，付款被迫排程；部分屬利用供應商帳期作營運資金。", "actions": ["將付款排程對齊收款節奏，建立現金流預測", "對提供早付折讓的供應商優先付款，賺取折讓", "控管逾期，避免傷害供應商關係與自身採購信用"]}, "outstanding": {"t": "應付未付餘額", "analysis": "未付餘額 NT$2,655 萬，約當 3.37 個月的月均營收，短期付款壓力顯著。若某月營收落到低點（曾低至 68.8 萬），償付能力將受考驗。", "source": "未付累積 + 營收高波動 = 流動性風險。所幸供應商尚分散（Top3 僅佔應付 13.6%），單一供應商斷鏈風險可控。", "actions": ["優先建立 13 週滾動現金流預測，提前看見缺口", "對高額未付供應商談延長帳期或分期清償", "保留至少覆蓋 1 個月固定支出的營運資金緩衝", "用清理呆滯庫存（原料佔 73.7%）釋出的現金降低未付"]}};
 
-// ---------- helpers ----------
 const PAL=['#C2A878','#D8C4A0','#A88C5F','#CBB892','#B8A589','#9C8763','#E0D2B8','#8C7458'];
 const fmt=n=>Math.round(n).toLocaleString('en-US');
-function money(n){ // abbreviate to 萬/億
-  const a=Math.abs(n);
-  if(a>=1e8) return (n/1e8).toFixed(2)+' 億';
-  if(a>=1e4) return (n/1e4).toFixed(0)+' 萬';
-  return fmt(n);
-}
+function money(n){const a=Math.abs(n);if(a>=1e8)return(n/1e8).toFixed(2)+' 億';if(a>=1e4)return(n/1e4).toFixed(0)+' 萬';return fmt(n);}
 const mlabel=ym=>ym.slice(0,4)+'/'+ym.slice(4,6);
-const el=(h)=>{const d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild;};
 
-// ---------- charts (pure SVG) ----------
-function lineChart(series, opts={}){
-  // series: [{name,color,data:[{x,y}]}]  shared x labels from first
+function lineChart(series,opts={}){
   const W=opts.w||720,H=opts.h||260,P={l:54,r:16,t:18,b:34};
-  const xs=series[0].data.map(d=>d.x);
-  const allY=series.flatMap(s=>s.data.map(d=>d.y));
-  const maxY=Math.max(...allY,1); const niceMax=maxY*1.1;
+  const xs=series[0].data.map(d=>d.x);const allY=series.flatMap(s=>s.data.map(d=>d.y));
+  const maxY=Math.max(...allY,1),niceMax=maxY*1.1;
   const px=i=>P.l+(W-P.l-P.r)*(xs.length<2?0.5:i/(xs.length-1));
-  const py=v=>H-P.b-(H-P.t-P.b)*(v/niceMax);
-  let g='';
-  // grid + y labels
+  const py=v=>H-P.b-(H-P.t-P.b)*(v/niceMax);let g='';
   for(let k=0;k<=4;k++){const v=niceMax*k/4,y=py(v);
     g+=`<line x1="${P.l}" y1="${y}" x2="${W-P.r}" y2="${y}" stroke="#EFE8DB"/>`;
     g+=`<text x="${P.l-8}" y="${y+4}" text-anchor="end" font-size="10" fill="#B0A48F">${money(v)}</text>`;}
-  // x labels (sparse)
   const step=Math.ceil(xs.length/8);
-  xs.forEach((x,i)=>{if(i%step===0||i===xs.length-1) g+=`<text x="${px(i)}" y="${H-12}" text-anchor="middle" font-size="9.5" fill="#B0A48F">${mlabel(x)}</text>`;});
-  series.forEach(s=>{
-    let d=s.data.map((p,i)=>(i?'L':'M')+px(i)+' '+py(p.y)).join(' ');
-    let area=d+` L ${px(s.data.length-1)} ${py(0)} L ${px(0)} ${py(0)} Z`;
-    if(opts.area) g+=`<path d="${area}" fill="${s.color}" opacity="0.10"/>`;
+  xs.forEach((x,i)=>{if(i%step===0||i===xs.length-1)g+=`<text x="${px(i)}" y="${H-12}" text-anchor="middle" font-size="9.5" fill="#B0A48F">${mlabel(x)}</text>`;});
+  series.forEach(s=>{let d=s.data.map((p,i)=>(i?'L':'M')+px(i)+' '+py(p.y)).join(' ');
+    if(opts.area)g+=`<path d="${d} L ${px(s.data.length-1)} ${py(0)} L ${px(0)} ${py(0)} Z" fill="${s.color}" opacity="0.10"/>`;
     g+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.4" stroke-linejoin="round"/>`;
-    s.data.forEach((p,i)=>{g+=`<circle cx="${px(i)}" cy="${py(p.y)}" r="2.6" fill="#fff" stroke="${s.color}" stroke-width="1.8"><title>${mlabel(p.x)}：${fmt(p.y)}</title></circle>`;});
-  });
+    s.data.forEach((p,i)=>{g+=`<circle cx="${px(i)}" cy="${py(p.y)}" r="2.6" fill="#fff" stroke="${s.color}" stroke-width="1.8"><title>${mlabel(p.x)}：${fmt(p.y)}</title></circle>`;});});
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${g}</svg>`;
 }
-function donut(parts, opts={}){
-  const W=opts.w||230,H=230,cx=W/2,cy=H/2,r=78,ir=48;
-  const tot=parts.reduce((a,p)=>a+p.value,0)||1; let ang=-Math.PI/2,g='';
-  parts.forEach((p,i)=>{
-    const a2=ang+2*Math.PI*p.value/tot;
+function donut(parts){const W=230,H=230,cx=115,cy=115,r=78,ir=48;
+  const tot=parts.reduce((a,p)=>a+p.value,0)||1;let ang=-Math.PI/2,g='';
+  parts.forEach((p,i)=>{const a2=ang+2*Math.PI*p.value/tot;
     const x1=cx+r*Math.cos(ang),y1=cy+r*Math.sin(ang),x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
     const xi1=cx+ir*Math.cos(a2),yi1=cy+ir*Math.sin(a2),xi2=cx+ir*Math.cos(ang),yi2=cy+ir*Math.sin(ang);
-    const large=(a2-ang)>Math.PI?1:0;
-    g+=`<path d="M${x1} ${y1} A${r} ${r} 0 ${large} 1 ${x2} ${y2} L${xi1} ${yi1} A${ir} ${ir} 0 ${large} 0 ${xi2} ${yi2} Z" fill="${PAL[i%PAL.length]}"><title>${p.name}：${money(p.value)}（${(p.value/tot*100).toFixed(1)}%）</title></path>`;
-    ang=a2;
-  });
+    const lg=(a2-ang)>Math.PI?1:0;
+    g+=`<path d="M${x1} ${y1} A${r} ${r} 0 ${lg} 1 ${x2} ${y2} L${xi1} ${yi1} A${ir} ${ir} 0 ${lg} 0 ${xi2} ${yi2} Z" fill="${PAL[i%PAL.length]}"><title>${p.name}：${money(p.value)}（${(p.value/tot*100).toFixed(1)}%）</title></path>`;ang=a2;});
   g+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="11" fill="#B0A48F">總額</text>`;
   g+=`<text x="${cx}" y="${cy+15}" text-anchor="middle" font-size="15" font-weight="700" fill="#7A6A52">${money(tot)}</text>`;
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:240px;margin:0 auto;display:block">${g}</svg>`;
 }
-function rankTable(rows, cols, maxKey){
-  const max=Math.max(...rows.map(r=>r[maxKey]),1);
+function rankTable(rows,cols,maxKey){const max=Math.max(...rows.map(r=>r[maxKey]),1);
   let h=`<table><thead><tr>${cols.map(c=>`<th class="${c.num?'num':''}">${c.t}</th>`).join('')}</tr></thead><tbody>`;
-  rows.forEach((r,i)=>{
-    h+='<tr>';
-    cols.forEach(c=>{
-      let v=r[c.k];
-      if(c.k==='__rank') v=`<span class="rank">${i+1}</span>`+ (r.__label||'');
-      else if(c.money) v=fmt(v);
-      if(c.bar){const w=(r[maxKey]/max*100).toFixed(1);
-        h+=`<td class="num bar-cell"><div class="fill" style="width:${w}%"></div><span>${v}</span></td>`;}
-      else h+=`<td class="${c.num?'num':''}">${v}</td>`;
-    });
-    h+='</tr>';
-  });
-  return h+'</tbody></table>';
-}
+  rows.forEach((r,i)=>{h+='<tr>';cols.forEach(c=>{let v=r[c.k];
+    if(c.k==='__rank')v=`<span class="rank">${i+1}</span>`+(r.__label||'');else if(c.money)v=fmt(v);
+    if(c.bar){const w=(r[maxKey]/max*100).toFixed(1);h+=`<td class="num bar-cell"><div class="fill" style="width:${w}%"></div><span>${v}</span></td>`;}
+    else h+=`<td class="${c.num?'num':''}">${v}</td>`;});h+='</tr>';});
+  return h+'</tbody></table>';}
 function legend(parts){return `<div class="legend">${parts.map((p,i)=>`<span><i style="background:${PAL[i%PAL.length]}"></i>${p.name}（${money(p.value)}）</span>`).join('')}</div>`;}
-function kpi(lab,val,sub,hl){return `<div class="kpi ${hl?'hl':''}"><div class="lab">${lab}</div><div class="val">${val}</div><div class="sub">${sub||''}</div></div>`;}
+function kpi(lab,val,sub,hl,ins){
+  const btn=ins?`<button class="ai-btn" data-ins="${ins}" data-mv="${(typeof val==='string'?val.replace(/<[^>]+>/g,''):val)}"><span class="sp">✦</span> AI 洞見</button>`:'';
+  return `<div class="kpi ${hl?'hl':''}"><div class="lab">${lab}</div><div class="val">${val}</div><div class="sub">${sub||''}</div>${btn}</div>`;
+}
 
-// ---------- views ----------
-function vOverview(){
-  const s=DATA.sales,inv=DATA.inventory,f=DATA.finance;
+function vOverview(){const s=DATA.sales,inv=DATA.inventory,f=DATA.finance;
   let h=`<div class="kpis">
-    ${kpi('總營收','<small>NT$</small> '+money(s.kpi.revenue),s.kpi.docs+' 張銷貨單 · '+s.kpi.customers+' 客戶',true)}
-    ${kpi('庫存總值','<small>NT$</small> '+money(inv.kpi.value),inv.kpi.items+' 品項 · '+inv.kpi.categories+' 分類')}
-    ${kpi('應付帳款','<small>NT$</small> '+money(f.kpi.payable),f.kpi.vouchers+' 張憑單')}
-    ${kpi('應付未付餘額','<small>NT$</small> '+money(f.kpi.outstanding),'已付 '+money(f.kpi.paid))}
+    ${kpi('總營收','<small>NT$</small> '+money(s.kpi.revenue),s.kpi.docs+' 張銷貨單 · '+s.kpi.customers+' 客戶',true,'revenue')}
+    ${kpi('庫存總值','<small>NT$</small> '+money(inv.kpi.value),inv.kpi.items+' 品項 · '+inv.kpi.categories+' 分類',false,'inventory_value')}
+    ${kpi('應付帳款','<small>NT$</small> '+money(f.kpi.payable),f.kpi.vouchers+' 張憑單',false,'payable')}
+    ${kpi('應付未付餘額','<small>NT$</small> '+money(f.kpi.outstanding),'已付 '+money(f.kpi.paid),false,'outstanding')}
   </div>`;
   h+=`<div class="grid g2">
     <div class="panel"><h3>營收 vs 應付　月趨勢</h3><div class="note">銷貨本幣金額 對比 應付憑單金額（按月）</div>
-      ${lineChart([
-        {name:'營收',color:'#C2A878',data:s.monthly.map(m=>({x:m.ym,y:m.amount}))},
-        {name:'應付',color:'#B8A589',data:f.ap_monthly.map(m=>({x:m.ym,y:m.payable}))}
-      ],{area:true})}
-      <div class="legend"><span><i style="background:#C2A878"></i>營收</span><span><i style="background:#B8A589"></i>應付</span></div>
-    </div>
+      ${lineChart([{name:'營收',color:'#C2A878',data:s.monthly.map(m=>({x:m.ym,y:m.amount}))},{name:'應付',color:'#B8A589',data:f.ap_monthly.map(m=>({x:m.ym,y:m.payable}))}],{area:true})}
+      <div class="legend"><span><i style="background:#C2A878"></i>營收</span><span><i style="background:#B8A589"></i>應付</span></div></div>
     <div class="panel"><h3>庫存結構</h3><div class="note">各品號分類庫存金額占比</div>
-      ${donut(inv.by_category.map(c=>({name:c.cat,value:c.value})))}
-      ${legend(inv.by_category.map(c=>({name:c.cat,value:c.value})))}
-    </div>
+      ${donut(inv.by_category.map(c=>({name:c.cat,value:c.value})))}${legend(inv.by_category.map(c=>({name:c.cat,value:c.value})))}</div>
   </div>`;
   h+=`<div class="grid g11">
     <div class="panel"><h3>前十大客戶（營收）</h3>
-      ${rankTable(s.top_customers.map(c=>({__label:c.name,amount:c.amount})),
-        [{k:'__rank',t:'客戶'},{k:'amount',t:'營收 NT$',num:true,money:true,bar:true}],'amount')}</div>
+      ${rankTable(s.top_customers.map(c=>({__label:c.name,amount:c.amount})),[{k:'__rank',t:'客戶'},{k:'amount',t:'營收 NT$',num:true,money:true,bar:true}],'amount')}</div>
     <div class="panel"><h3>前十大應付供應商</h3>
-      ${rankTable(f.top_vendors.map(v=>({__label:'供應商 '+v.vendor,payable:v.payable,unpaid:v.unpaid})),
-        [{k:'__rank',t:'供應商'},{k:'unpaid',t:'未付 NT$',num:true,money:true},{k:'payable',t:'應付 NT$',num:true,money:true,bar:true}],'payable')}</div>
-  </div>`;
-  return h;
-}
-function vFinance(){
-  const f=DATA.finance;
+      ${rankTable(f.top_vendors.map(v=>({__label:'供應商 '+v.vendor,payable:v.payable,unpaid:v.unpaid})),[{k:'__rank',t:'供應商'},{k:'unpaid',t:'未付 NT$',num:true,money:true},{k:'payable',t:'應付 NT$',num:true,money:true,bar:true}],'payable')}</div>
+  </div>`;return h;}
+function vFinance(){const f=DATA.finance;
   let h=`<div class="kpis">
-    ${kpi('總營收','<small>NT$</small> '+money(f.kpi.revenue),'銷貨收入合計',true)}
-    ${kpi('應付帳款','<small>NT$</small> '+money(f.kpi.payable),f.kpi.vouchers+' 張應付憑單')}
-    ${kpi('已付金額','<small>NT$</small> '+money(f.kpi.paid),'付款率 '+(f.kpi.paid/f.kpi.payable*100).toFixed(0)+'%')}
-    ${kpi('未付餘額','<small>NT$</small> '+money(f.kpi.outstanding),'待支付')}
+    ${kpi('總營收','<small>NT$</small> '+money(f.kpi.revenue),'銷貨收入合計',true,'revenue')}
+    ${kpi('應付帳款','<small>NT$</small> '+money(f.kpi.payable),f.kpi.vouchers+' 張應付憑單',false,'payable')}
+    ${kpi('已付金額','<small>NT$</small> '+money(f.kpi.paid),'付款率 '+(f.kpi.paid/f.kpi.payable*100).toFixed(0)+'%',false,'payment_rate')}
+    ${kpi('未付餘額','<small>NT$</small> '+money(f.kpi.outstanding),'待支付',false,'outstanding')}
   </div>`;
   h+=`<div class="panel" style="margin-bottom:18px"><h3>應付帳款　月趨勢</h3><div class="note">應付金額 vs 已付金額（按憑單日期）</div>
-    ${lineChart([
-      {name:'應付',color:'#A88C5F',data:f.ap_monthly.map(m=>({x:m.ym,y:m.payable}))},
-      {name:'已付',color:'#D8C4A0',data:f.ap_monthly.map(m=>({x:m.ym,y:m.paid}))}
-    ],{area:true,h:280})}
+    ${lineChart([{name:'應付',color:'#A88C5F',data:f.ap_monthly.map(m=>({x:m.ym,y:m.payable}))},{name:'已付',color:'#D8C4A0',data:f.ap_monthly.map(m=>({x:m.ym,y:m.paid}))}],{area:true,h:280})}
     <div class="legend"><span><i style="background:#A88C5F"></i>應付</span><span><i style="background:#D8C4A0"></i>已付</span></div></div>`;
   h+=`<div class="grid g11">
-    <div class="panel"><h3>營收　月趨勢</h3>
-      ${lineChart([{name:'營收',color:'#C2A878',data:f.rev_monthly.map(m=>({x:m.ym,y:m.amount}))}],{area:true})}</div>
+    <div class="panel"><h3>營收　月趨勢</h3>${lineChart([{name:'營收',color:'#C2A878',data:f.rev_monthly.map(m=>({x:m.ym,y:m.amount}))}],{area:true})}</div>
     <div class="panel"><h3>前十大應付供應商</h3>
-      ${rankTable(f.top_vendors.map(v=>({__label:'供應商 '+v.vendor,unpaid:v.unpaid,payable:v.payable})),
-        [{k:'__rank',t:'供應商'},{k:'unpaid',t:'未付 NT$',num:true,money:true},{k:'payable',t:'應付 NT$',num:true,money:true,bar:true}],'payable')}</div>
-  </div>`;
-  return h;
-}
-function vInventory(){
-  const inv=DATA.inventory;
+      ${rankTable(f.top_vendors.map(v=>({__label:'供應商 '+v.vendor,unpaid:v.unpaid,payable:v.payable})),[{k:'__rank',t:'供應商'},{k:'unpaid',t:'未付 NT$',num:true,money:true},{k:'payable',t:'應付 NT$',num:true,money:true,bar:true}],'payable')}</div>
+  </div>`;return h;}
+function vInventory(){const inv=DATA.inventory;
   let h=`<div class="kpis">
-    ${kpi('庫存總值','<small>NT$</small> '+money(inv.kpi.value),'全品項合計',true)}
-    ${kpi('品項數',fmt(inv.kpi.items),'品號主檔')}
-    ${kpi('有庫存品項',fmt(inv.kpi.instock),'庫存量或金額 > 0')}
-    ${kpi('品號分類',inv.kpi.categories+' 類','有庫存分類')}
+    ${kpi('庫存總值','<small>NT$</small> '+money(inv.kpi.value),'全品項合計',true,'inventory_value')}
+    ${kpi('品項數',fmt(inv.kpi.items),'品號主檔',false,'inventory_items')}
+    ${kpi('有庫存品項',fmt(inv.kpi.instock),'庫存量或金額 > 0',false,'inventory_items')}
+    ${kpi('品號分類',inv.kpi.categories+' 類','有庫存分類',false,'inventory_categories')}
   </div>`;
   h+=`<div class="grid g2">
     <div class="panel"><h3>各分類庫存金額</h3><div class="note">依品號分類彙總</div>
-      ${donut(inv.by_category.map(c=>({name:c.cat,value:c.value})))}
-      ${legend(inv.by_category.map(c=>({name:c.cat,value:c.value})))}</div>
+      ${donut(inv.by_category.map(c=>({name:c.cat,value:c.value})))}${legend(inv.by_category.map(c=>({name:c.cat,value:c.value})))}</div>
     <div class="panel"><h3>分類明細</h3>
-      ${rankTable(inv.by_category.map(c=>({__label:c.cat,value:c.value,count:c.count})),
-        [{k:'__rank',t:'分類'},{k:'count',t:'品項數',num:true},{k:'value',t:'庫存金額 NT$',num:true,money:true,bar:true}],'value')}</div>
+      ${rankTable(inv.by_category.map(c=>({__label:c.cat,value:c.value,count:c.count})),[{k:'__rank',t:'分類'},{k:'count',t:'品項數',num:true},{k:'value',t:'庫存金額 NT$',num:true,money:true,bar:true}],'value')}</div>
   </div>`;
   h+=`<div class="panel"><h3>庫存金額前十大品項</h3>
-    ${rankTable(inv.top_items.map(it=>({__label:it.name,cat:it.cat,qty:it.qty,value:it.value,pno:it.pno})),
-      [{k:'__rank',t:'品名'},{k:'pno',t:'品號'},{k:'cat',t:'分類'},{k:'qty',t:'庫存量',num:true,money:true},{k:'value',t:'庫存金額 NT$',num:true,money:true,bar:true}],'value')}</div>`;
-  return h;
-}
-function vSales(){
-  const s=DATA.sales;
+    ${rankTable(inv.top_items.map(it=>({__label:it.name,cat:it.cat,qty:it.qty,value:it.value,pno:it.pno})),[{k:'__rank',t:'品名'},{k:'pno',t:'品號'},{k:'cat',t:'分類'},{k:'qty',t:'庫存量',num:true,money:true},{k:'value',t:'庫存金額 NT$',num:true,money:true,bar:true}],'value')}</div>`;return h;}
+function vSales(){const s=DATA.sales;
   let h=`<div class="kpis">
-    ${kpi('總營收','<small>NT$</small> '+money(s.kpi.revenue),'銷貨本幣金額',true)}
-    ${kpi('銷貨單數',fmt(s.kpi.docs),'張')}
-    ${kpi('平均客單價','<small>NT$</small> '+money(s.kpi.avg_order),'每張銷貨單')}
-    ${kpi('交易客戶數',fmt(s.kpi.customers),'家')}
+    ${kpi('總營收','<small>NT$</small> '+money(s.kpi.revenue),'銷貨本幣金額',true,'revenue')}
+    ${kpi('銷貨單數',fmt(s.kpi.docs),'張',false,'docs')}
+    ${kpi('平均客單價','<small>NT$</small> '+money(s.kpi.avg_order),'每張銷貨單',false,'avg_order')}
+    ${kpi('交易客戶數',fmt(s.kpi.customers),'家',false,'customers')}
   </div>`;
   h+=`<div class="panel" style="margin-bottom:18px"><h3>營收　月趨勢</h3><div class="note">每月銷貨金額（NT$）</div>
     ${lineChart([{name:'營收',color:'#C2A878',data:s.monthly.map(m=>({x:m.ym,y:m.amount}))}],{area:true,h:280})}</div>`;
   h+=`<div class="grid g11">
-    <div class="panel"><h3>前十大客戶</h3>
-      ${rankTable(s.top_customers.map(c=>({__label:c.name,amount:c.amount})),
-        [{k:'__rank',t:'客戶'},{k:'amount',t:'營收 NT$',num:true,money:true,bar:true}],'amount')}</div>
-    <div class="panel"><h3>業務員業績</h3>
-      ${rankTable(s.by_sales.map(v=>({__label:'業務 '+v.emp,amount:v.amount})),
-        [{k:'__rank',t:'業務員'},{k:'amount',t:'營收 NT$',num:true,money:true,bar:true}],'amount')}</div>
+    <div class="panel"><h3>前十大客戶</h3>${rankTable(s.top_customers.map(c=>({__label:c.name,amount:c.amount})),[{k:'__rank',t:'客戶'},{k:'amount',t:'營收 NT$',num:true,money:true,bar:true}],'amount')}</div>
+    <div class="panel"><h3>業務員業績</h3>${rankTable(s.by_sales.map(v=>({__label:'業務 '+v.emp,amount:v.amount})),[{k:'__rank',t:'業務員'},{k:'amount',t:'營收 NT$',num:true,money:true,bar:true}],'amount')}</div>
   </div>`;
   h+=`<div class="panel"><h3>暢銷商品（金額前十）</h3>
-    ${rankTable(s.top_products.map(p=>({__label:p.name,pno:p.pno,qty:p.qty,amount:p.amount})),
-      [{k:'__rank',t:'品名'},{k:'pno',t:'品號'},{k:'qty',t:'數量',num:true,money:true},{k:'amount',t:'銷售金額 NT$',num:true,money:true,bar:true}],'amount')}</div>`;
-  return h;
-}
+    ${rankTable(s.top_products.map(p=>({__label:p.name,pno:p.pno,qty:p.qty,amount:p.amount})),[{k:'__rank',t:'品名'},{k:'pno',t:'品號'},{k:'qty',t:'數量',num:true,money:true},{k:'amount',t:'銷售金額 NT$',num:true,money:true,bar:true}],'amount')}</div>`;return h;}
+
 const VIEWS={overview:vOverview,finance:vFinance,inventory:vInventory,sales:vSales};
 function render(tab){document.getElementById('app').innerHTML=VIEWS[tab]();}
-document.getElementById('nav').addEventListener('click',e=>{
-  const t=e.target.closest('.tab'); if(!t)return;
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  t.classList.add('active'); render(t.dataset.tab);
-});
+document.getElementById('nav').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');render(t.dataset.tab);});
+
+// ---- 洞見 Modal ----
+const overlay=document.getElementById('overlay');
+function openInsight(id,mv){const d=INSIGHTS[id];if(!d)return;
+  document.getElementById('mTitle').textContent=d.t;
+  document.getElementById('mValue').textContent=mv?('目前數值　'+mv):'';
+  document.getElementById('mBody').innerHTML=
+    `<div class="sec"><div class="h"><span class="ic">🔍</span>問題分析</div><p>${d.analysis}</p></div>`+
+    `<div class="sec"><div class="h"><span class="ic">🧭</span>問題來源</div><p>${d.source}</p></div>`+
+    `<div class="sec"><div class="h"><span class="ic">💡</span>建議對策</div><ul>${d.actions.map(a=>`<li>${a}</li>`).join('')}</ul></div>`;
+  overlay.classList.add('show');}
+function closeInsight(){overlay.classList.remove('show');}
+document.body.addEventListener('click',e=>{const b=e.target.closest('.ai-btn');if(b){openInsight(b.dataset.ins,b.dataset.mv);}});
+document.getElementById('mClose').addEventListener('click',closeInsight);
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeInsight();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeInsight();});
+
 render('overview');
 </script>
 </body>
