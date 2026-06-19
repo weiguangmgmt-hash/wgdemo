@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>唯光動物醫院 · 營運儀表板</title>
+<style>
+:root{
+  --gold:#C2A878; --gold2:#D8C4A0; --gold3:#B8A589; --gold4:#A88C5F;
+  --ink:#4A4036; --muted:#9A8E7C; --bg:#FAF7F2; --card:#FFFFFF;
+  --line:#ECE4D7; --shadow:0 6px 24px rgba(140,120,90,.10);
+  --pos:#8FA98C; --neg:#C98F8F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Noto Sans TC","PingFang TC","Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+.serif{font-family:"Cormorant Garamond","Times New Roman",Georgia,serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* Header */
+header{padding:34px 0 18px;text-align:center;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--bg))}
+.logo-mark{margin:0 auto 6px}
+.brand-en{font-family:"Cormorant Garamond",Georgia,serif;font-size:34px;letter-spacing:10px;
+  color:var(--gold4);font-weight:600;margin-left:10px}
+.brand-sub{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:18px;color:var(--gold);letter-spacing:2px;margin-top:-2px}
+.brand-zh{font-size:15px;letter-spacing:9px;color:var(--muted);margin-top:8px}
+.dash-title{margin-top:14px;font-size:13px;letter-spacing:3px;color:var(--muted)}
+
+/* Tabs */
+nav{display:flex;justify-content:center;gap:6px;margin:22px 0 26px;flex-wrap:wrap}
+.tab{padding:10px 26px;border:1px solid var(--line);background:#fff;border-radius:999px;
+  cursor:pointer;font-size:14px;color:var(--muted);letter-spacing:2px;transition:.2s}
+.tab:hover{border-color:var(--gold)}
+.tab.active{background:var(--gold);color:#fff;border-color:var(--gold);box-shadow:var(--shadow)}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
+.kpi .lab{font-size:12px;color:var(--muted);letter-spacing:1px}
+.kpi .val{font-size:28px;font-weight:700;margin-top:8px;color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;letter-spacing:.5px}
+.kpi .val small{font-size:14px;color:var(--gold4);font-family:inherit}
+.kpi .sub{font-size:11px;color:var(--muted);margin-top:4px}
+.kpi.hl{background:linear-gradient(135deg,var(--gold),var(--gold4));border:none}
+.kpi.hl .lab,.kpi.hl .sub{color:rgba(255,255,255,.85)}
+.kpi.hl .val{color:#fff}
+
+/* Cards / charts */
+.grid{display:grid;gap:18px;margin-bottom:18px}
+.g2{grid-template-columns:1.55fr 1fr}
+.g11{grid-template-columns:1fr 1fr}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
+.panel h3{font-size:14px;font-weight:600;letter-spacing:1px;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.panel h3::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--gold);display:inline-block;transform:rotate(45deg)}
+.panel .note{font-size:11px;color:var(--muted);margin-bottom:14px}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:500;font-size:11px;letter-spacing:1px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:hover{background:#FBF8F2}
+.rank{display:inline-flex;width:20px;height:20px;border-radius:6px;background:#F2EBDD;color:var(--gold4);
+  font-size:11px;align-items:center;justify-content:center;font-weight:700;margin-right:8px}
+.bar-cell{position:relative}
+.bar-cell .fill{position:absolute;left:0;top:0;height:100%;background:linear-gradient(90deg,rgba(194,168,120,.22),rgba(194,168,120,.05));border-radius:4px;z-index:0}
+.bar-cell span{position:relative;z-index:1}
+
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;font-size:12px;color:var(--muted)}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:middle}
+.hide{display:none}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 40px;letter-spacing:1px}
+.pill{display:inline-block;font-size:11px;padding:2px 10px;border-radius:999px;background:#F2EBDD;color:var(--gold4);margin-left:6px}
+svg text{font-family:inherit}
+@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.g2,.g11{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <svg class="logo-mark" width="64" height="64" viewBox="0 0 100 100">
+    <g fill="none" stroke="#C2A878" stroke-width="2.2" stroke-linecap="round">
+      <line x1="50" y1="6" x2="50" y2="30"/><line x1="50" y1="70" x2="50" y2="94"/>
+      <line x1="6" y1="50" x2="30" y2="50"/><line x1="70" y1="50" x2="94" y2="50"/>
+      <line x1="22" y1="22" x2="38" y2="38"/><line x1="62" y1="62" x2="78" y2="78"/>
+      <line x1="78" y1="22" x2="62" y2="38"/><line x1="38" y1="62" x2="22" y2="78"/>
+    </g>
+    <text x="50" y="46" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="20" fill="#A88C5F" font-weight="700">W</text>
+    <text x="50" y="64" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="20" fill="#A88C5F" font-weight="700">M</text>
+  </svg>
+  <div class="brand-en">WEI GUANG</div>
+  <div class="brand-sub">Animal Hospital</div>
+  <div class="brand-zh">唯 光 動 物 醫 院</div>
+  <div class="dash-title">營 運 儀 表 板　·　ERP DATA DASHBOARD</div>
+</header>
+
+<div class="wrap">
+  <nav id="nav">
+    <div class="tab active" data-tab="overview">總覽</div>
+    <div class="tab" data-tab="finance">財務</div>
+    <div class="tab" data-tab="inventory">庫存</div>
+    <div class="tab" data-tab="sales">銷售</div>
+  </nav>
+  <div id="app"></div>
+  <footer>資料來源：DEMO-ERP（財會 / 庫存 / 銷售）　|　24 個月區間 2024-07 ～ 2026-06　|　金額單位：新台幣　|　本頁離線可用</footer>
+</div>
+
+<script>
+const DATA = {
+ "sales": {
+  "kpi": {
+   "revenue": 188834638,
+   "docs": 365,
+   "customers": 42,
+   "avg_order": 517355,
+   "qty": 402700
+  },
+  "monthly": [
+   {
+    "ym": "202407",
+    "amount": 687850,
+    "docs": 2
+   },
+   {
+    "ym": "202408",
+    "amount": 6642830,
+    "docs": 14
+   },
+   {
+    "ym": "202409",
+    "amount": 4078758,
+    "docs": 11
+   },
+   {
+    "ym": "202410",
+    "amount": 4256823,
+    "docs": 12
+   },
+   {
+    "ym": "202411",
+    "amount": 6739277,
+    "docs": 18
+   },
+   {
+    "ym": "202412",
+    "amount": 5547500,
+    "docs": 12
+   },
+   {
+    "ym": "202501",
+    "amount": 10264419,
+    "docs": 16
+   },
+   {
+    "ym": "202502",
+    "amount": 5141492,
+    "docs": 13
+   },
+   {
+    "ym": "202503",
+    "amount": 4666600,
+    "docs": 16
+   },
+   {
+    "ym": "202504",
+    "amount": 6913561,
+    "docs": 16
+   },
+   {
+    "ym": "202505",
+    "amount": 9031058,
+    "docs": 14
+   },
+   {
+    "ym": "202506",
+    "amount": 6726755,
+    "docs": 14
+   },
+   {
+    "ym": "202507",
+    "amount": 13464777,
+    "docs": 21
+   },
+   {
+    "ym": "202508",
+    "amount": 6138108,
+    "docs": 17
+   },
+   {
+    "ym": "202509",
+    "amount": 5923975,
+    "docs": 10
+   },
+   {
+    "ym": "202510",
+    "amount": 10962010,
+    "docs": 16
+   },
+   {
+    "ym": "202511",
+    "amount": 13093592,
+    "docs": 18
+   },
+   {
+    "ym": "202512",
+    "amount": 9689284,
+    "docs": 16
+   },
+   {
+    "ym": "202601",
+    "amount": 12006962,
+    "docs": 17
+   },
+   {
+    "ym": "202602",
+    "amount": 2761108,
+    "docs": 10
+   },
+   {
+    "ym": "202603",
+    "amount": 8638473,
+    "docs": 13
+   },
+   {
+    "ym": "202604",
+    "amount": 9517050,
+    "docs": 17
+   },
+   {
+    "ym": "202605",
+    "amount": 7740195,
+    "docs": 16
+   },
+   {
+    "ym": "202606",
+    "amount": 18202181,
+    "docs": 36
+   }
+  ],
+  "top_customers": [
+   {
+    "name": "茂光電",
+    "amount": 20617951
+   },
+   {
+    "name": "勤東工業",
+    "amount": 18051001
+   },
+   {
+    "name": "東弘自動化",
+    "amount": 12179902
+   },
+   {
+    "name": "東友電機",
+    "amount": 11022586
+   },
+   {
+    "name": "義弘能源",
+    "amount": 9917401
+   },
+   {
+    "name": "台電子",
+    "amount": 9036250
+   },
+   {
+    "name": "台瑞系統",
+    "amount": 8834825
+   },
+   {
+    "name": "茂義實業",
+    "amount": 7580745
+   },
+   {
+    "name": "東勝能源",
+    "amount": 7403452
+   },
+   {
+    "name": "耀聯實業",
+    "amount": 7183764
+   }
+  ],
+  "by_sales": [
+   {
+    "emp": "0004",
+    "amount": 70982254
+   },
+   {
+    "emp": "0015",
+    "amount": 49445631
+   },
+   {
+    "emp": "0019",
+    "amount": 27323149
+   },
+   {
+    "emp": "0023",
+    "amount": 23908120
+   },
+   {
+    "emp": "0011",
+    "amount": 13832131
+   },
+   {
+    "emp": "0007",
+    "amount": 3343353
+   }
+  ],
+  "top_products": [
+   {
+    "pno": "IMS-P",
+    "name": "智能流程-採購件",
+    "amount": 18613344,
+    "qty": 12741
+   },
+   {
+    "pno": "1-6-90107-3001-001",
+    "name": "G-BRF2-825-975/R",
+    "amount": 15304410,
+    "qty": 17893
+   },
+   {
+    "pno": "1-1-00-0151-F1-16",
+    "name": "G-12-015A 150W CE 230V 德兒 黑",
+    "amount": 13369296,
+    "qty": 14529
+   },
+   {
+    "pno": "1-5-1A-MA01-00",
+    "name": "微波感應器",
+    "amount": 11098098,
+    "qty": 18839
+   },
+   {
+    "pno": "1-4-0001",
+    "name": "42\"直下型背光模組",
+    "amount": 10790144,
+    "qty": 12481
+   },
+   {
+    "pno": "IMS-M",
+    "name": "智能流程-自製件",
+    "amount": 10594751,
+    "qty": 14017
+   },
+   {
+    "pno": "1-3-BEA-M04-002",
+    "name": "CABLE 白色組裝測試",
+    "amount": 9175070,
+    "qty": 7730
+   },
+   {
+    "pno": "1-7-7811NS509BD000R",
+    "name": "SMA R/A CRIMP PLUG",
+    "amount": 8247934,
+    "qty": 8373
+   },
+   {
+    "pno": "1-7-1111111001",
+    "name": "1-7-1111111001",
+    "amount": 6592742,
+    "qty": 12214
+   },
+   {
+    "pno": "1-7-7098NY500CF002R",
+    "name": "BNC \"Y\" LINK JACK-PLUG-JACK",
+    "amount": 5286371,
+    "qty": 13295
+   }
+  ]
+ },
+ "inventory": {
+  "kpi": {
+   "value": 14870437,
+   "items": 367,
+   "instock": 366,
+   "categories": 5
+  },
+  "by_category": [
+   {
+    "cat": "原料",
+    "value": 10956860,
+    "count": 268
+   },
+   {
+    "cat": "半成品",
+    "value": 1772109,
+    "count": 57
+   },
+   {
+    "cat": "成品",
+    "value": 767313,
+    "count": 17
+   },
+   {
+    "cat": "未分類",
+    "value": 717049,
+    "count": 13
+   },
+   {
+    "cat": "物料",
+    "value": 657106,
+    "count": 12
+   }
+  ],
+  "top_items": [
+   {
+    "pno": "1-3-BEA-M04-002",
+    "name": "CABLE 白色組裝測試",
+    "value": 200176,
+    "qty": 277,
+    "cat": "成品"
+   },
+   {
+    "pno": "1-7-7811NS509BD000R",
+    "name": "SMA R/A CRIMP PLUG",
+    "value": 150266,
+    "qty": 253,
+    "cat": "成品"
+   },
+   {
+    "pno": "3-1-24-015-170-1",
+    "name": "散熱片 G-015槽   (170m/m)",
+    "value": 149244,
+    "qty": 2747,
+    "cat": "未分類"
+   },
+   {
+    "pno": "3-2-11-809035-5A",
+    "name": "晶片電阻",
+    "value": 148620,
+    "qty": 2909,
+    "cat": "原料"
+   },
+   {
+    "pno": "3-7-R11-014",
+    "name": "9.5φ 圓銅條黃銅",
+    "value": 143545,
+    "qty": 2729,
+    "cat": "原料"
+   },
+   {
+    "pno": "3-1-20-18-0064",
+    "name": "壓條 64m/m [300W用]",
+    "value": 136853,
+    "qty": 2781,
+    "cat": "未分類"
+   },
+   {
+    "pno": "3-2-12-4B0008-3Z",
+    "name": "積層電容",
+    "value": 135812,
+    "qty": 2650,
+    "cat": "原料"
+   },
+   {
+    "pno": "3-2-11-809061-5A",
+    "name": "晶片電阻",
+    "value": 133098,
+    "qty": 2593,
+    "cat": "原料"
+   },
+   {
+    "pno": "3-6-803-244S1-1001",
+    "name": "鋅盒公頭固定座  ASS'Y",
+    "value": 124647,
+    "qty": 2840,
+    "cat": "原料"
+   },
+   {
+    "pno": "3-2-12-450007-3Z",
+    "name": "積層電容",
+    "value": 124620,
+    "qty": 2386,
+    "cat": "原料"
+   }
+  ]
+ },
+ "finance": {
+  "kpi": {
+   "payable": 91503691,
+   "paid": 64952213,
+   "outstanding": 26551478,
+   "vouchers": 403,
+   "revenue": 188834638
+  },
+  "ap_monthly": [
+   {
+    "ym": "202407",
+    "payable": 2017814,
+    "paid": 1774938
+   },
+   {
+    "ym": "202408",
+    "payable": 2473223,
+    "paid": 1299328
+   },
+   {
+    "ym": "202409",
+    "payable": 2336444,
+    "paid": 2003188
+   },
+   {
+    "ym": "202410",
+    "payable": 3297852,
+    "paid": 1647523
+   },
+   {
+    "ym": "202411",
+    "payable": 3866008,
+    "paid": 2870939
+   },
+   {
+    "ym": "202412",
+    "payable": 2554181,
+    "paid": 1783409
+   },
+   {
+    "ym": "202501",
+    "payable": 5064054,
+    "paid": 4992074
+   },
+   {
+    "ym": "202502",
+    "payable": 3170916,
+    "paid": 1887821
+   },
+   {
+    "ym": "202503",
+    "payable": 3858410,
+    "paid": 3583578
+   },
+   {
+    "ym": "202504",
+    "payable": 5241495,
+    "paid": 5154164
+   },
+   {
+    "ym": "202505",
+    "payable": 2661309,
+    "paid": 2604168
+   },
+   {
+    "ym": "202506",
+    "payable": 2157349,
+    "paid": 1500405
+   },
+   {
+    "ym": "202507",
+    "payable": 2072482,
+    "paid": 1407116
+   },
+   {
+    "ym": "202508",
+    "payable": 4699854,
+    "paid": 4051047
+   },
+   {
+    "ym": "202509",
+    "payable": 2446346,
+    "paid": 1925329
+   },
+   {
+    "ym": "202510",
+    "payable": 3286677,
+    "paid": 3186339
+   },
+   {
+    "ym": "202511",
+    "payable": 7177553,
+    "paid": 6168789
+   },
+   {
+    "ym": "202512",
+    "payable": 3553979,
+    "paid": 2884243
+   },
+   {
+    "ym": "202601",
+    "payable": 4554508,
+    "paid": 3707076
+   },
+   {
+    "ym": "202602",
+    "payable": 3278231,
+    "paid": 2530055
+   },
+   {
+    "ym": "202603",
+    "payable": 4723666,
+    "paid": 2347953
+   },
+   {
+    "ym": "202604",
+    "payable": 3509254,
+    "paid": 2765756
+   },
+   {
+    "ym": "202605",
+    "payable": 6260552,
+    "paid": 1622125
+   },
+   {
+    "ym": "202606",
+    "payable": 7241534,
+    "paid": 1254850
+   }
+  ],
+  "top_vendors": [
+   {
+    "vendor": "312",
+    "payable": 4544332,
+    "unpaid": 985202
+   },
+   {
+    "vendor": "104",
+    "payable": 3981810,
+    "unpaid": 276427
+   },
+   {
+    "vendor": "204",
+    "payable": 3944272,
+    "unpaid": 1995648
+   },
+   {
+    "vendor": "301",
+    "payable": 3894693,
+    "unpaid": 875898
+   },
+   {
+    "vendor": "324",
+    "payable": 3826700,
+    "unpaid": 1390101
+   },
+   {
+    "vendor": "318",
+    "payable": 3532289,
+    "unpaid": 962395
+   },
+   {
+    "vendor": "201",
+    "payable": 3431893,
+    "unpaid": 1754491
+   },
+   {
+    "vendor": "111",
+    "payable": 3301317,
+    "unpaid": 1234058
+   },
+   {
+    "vendor": "314",
+    "payable": 3210036,
+    "unpaid": 1593405
+   },
+   {
+    "vendor": "329",
+    "payable": 3128897,
+    "unpaid": 1670285
+   }
+  ],
+  "rev_monthly": [
+   {
+    "ym": "202407",
+    "amount": 687850,
+    "docs": 2
+   },
+   {
+    "ym": "202408",
+    "amount": 6642830,
+    "docs": 14
+   },
+   {
+    "ym": "202409",
+    "amount": 4078758,
+    "docs": 11
+   },
+   {
+    "ym": "202410",
+    "amount": 4256823,
+    "docs": 12
+   },
+   {
+    "ym": "202411",
+    "amount": 6739277,
+    "docs": 18
+   },
+   {
+    "ym": "202412",
+    "amount": 5547500,
+    "docs": 12
+   },
+   {
+    "ym": "202501",
+    "amount": 10264419,
+    "docs": 16
+   },
+   {
+    "ym": "202502",
+    "amount": 5141492,
+    "docs": 13
+   },
+   {
+    "ym": "202503",
+    "amount": 4666600,
+    "docs": 16
+   },
+   {
+    "ym": "202504",
+    "amount": 6913561,
+    "docs": 16
+   },
+   {
+    "ym": "202505",
+    "amount": 9031058,
+    "docs": 14
+   },
+   {
+    "ym": "202506",
+    "amount": 6726755,
+    "docs": 14
+   },
+   {
+    "ym": "202507",
+    "amount": 13464777,
+    "docs": 21
+   },
+   {
+    "ym": "202508",
+    "amount": 6138108,
+    "docs": 17
+   },
+   {
+    "ym": "202509",
+    "amount": 5923975,
+    "docs": 10
+   },
+   {
+    "ym": "202510",
+    "amount": 10962010,
+    "docs": 16
+   },
+   {
+    "ym": "202511",
+    "amount": 13093592,
+    "docs": 18
+   },
+   {
+    "ym": "202512",
+    "amount": 9689284,
+    "docs": 16
+   },
+   {
+    "ym": "202601",
+    "amount": 12006962,
+    "docs": 17
+   },
+   {
+    "ym": "202602",
+    "amount": 2761108,
+    "docs": 10
+   },
+   {
+    "ym": "202603",
+    "amount": 8638473,
+    "docs": 13
+   },
+   {
+    "ym": "202604",
+    "amount": 9517050,
+    "docs": 17
+   },
+   {
+    "ym": "202605",
+    "amount": 7740195,
+    "docs": 16
+   },
+   {
+    "ym": "202606",
+    "amount": 18202181,
+    "docs": 36
+   }
+  ]
+ }
+};
+
+// ---------- helpers ----------
+const PAL=['#C2A878','#D8C4A0','#A88C5F','#CBB892','#B8A589','#9C8763','#E0D2B8','#8C7458'];
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+function money(n){ // abbreviate to 萬/億
+  const a=Math.abs(n);
+  if(a>=1e8) return (n/1e8).toFixed(2)+' 億';
+  if(a>=1e4) return (n/1e4).toFixed(0)+' 萬';
+  return fmt(n);
+}
+const mlabel=ym=>ym.slice(0,4)+'/'+ym.slice(4,6);
+const el=(h)=>{const d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild;};
+
+// ---------- charts (pure SVG) ----------
+function lineChart(series, opts={}){
+  // series: [{name,color,data:[{x,y}]}]  shared x labels from first
+  const W=opts.w||720,H=opts.h||260,P={l:54,r:16,t:18,b:34};
+  const xs=series[0].data.map(d=>d.x);
+  const allY=series.flatMap(s=>s.data.map(d=>d.y));
+  const maxY=Math.max(...allY,1); const niceMax=maxY*1.1;
+  const px=i=>P.l+(W-P.l-P.r)*(xs.length<2?0.5:i/(xs.length-1));
+  const py=v=>H-P.b-(H-P.t-P.b)*(v/niceMax);
+  let g='';
+  // grid + y labels
+  for(let k=0;k<=4;k++){const v=niceMax*k/4,y=py(v);
+    g+=`<line x1="${P.l}" y1="${y}" x2="${W-P.r}" y2="${y}" stroke="#EFE8DB"/>`;
+    g+=`<text x="${P.l-8}" y="${y+4}" text-anchor="end" font-size="10" fill="#B0A48F">${money(v)}</text>`;}
+  // x labels (sparse)
+  const step=Math.ceil(xs.length/8);
+  xs.forEach((x,i)=>{if(i%step===0||i===xs.length-1) g+=`<text x="${px(i)}" y="${H-12}" text-anchor="middle" font-size="9.5" fill="#B0A48F">${mlabel(x)}</text>`;});
+  series.forEach(s=>{
+    let d=s.data.map((p,i)=>(i?'L':'M')+px(i)+' '+py(p.y)).join(' ');
+    let area=d+` L ${px(s.data.length-1)} ${py(0)} L ${px(0)} ${py(0)} Z`;
+    if(opts.area) g+=`<path d="${area}" fill="${s.color}" opacity="0.10"/>`;
+    g+=`<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2.4" stroke-linejoin="round"/>`;
+    s.data.forEach((p,i)=>{g+=`<circle cx="${px(i)}" cy="${py(p.y)}" r="2.6" fill="#fff" stroke="${s.color}" stroke-width="1.8"><title>${mlabel(p.x)}：${fmt(p.y)}</title></circle>`;});
+  });
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" preserveAspectRatio="xMidYMid meet">${g}</svg>`;
+}
+function donut(parts, opts={}){
+  const W=opts.w||230,H=230,cx=W/2,cy=H/2,r=78,ir=48;
+  const tot=parts.reduce((a,p)=>a+p.value,0)||1; let ang=-Math.PI/2,g='';
+  parts.forEach((p,i)=>{
+    const a2=ang+2*Math.PI*p.value/tot;
+    const x1=cx+r*Math.cos(ang),y1=cy+r*Math.sin(ang),x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
+    const xi1=cx+ir*Math.cos(a2),yi1=cy+ir*Math.sin(a2),xi2=cx+ir*Math.cos(ang),yi2=cy+ir*Math.sin(ang);
+    const large=(a2-ang)>Math.PI?1:0;
+    g+=`<path d="M${x1} ${y1} A${r} ${r} 0 ${large} 1 ${x2} ${y2} L${xi1} ${yi1} A${ir} ${ir} 0 ${large} 0 ${xi2} ${yi2} Z" fill="${PAL[i%PAL.length]}"><title>${p.name}：${money(p.value)}（${(p.value/tot*100).toFixed(1)}%）</title></path>`;
+    ang=a2;
+  });
+  g+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="11" fill="#B0A48F">總額</text>`;
+  g+=`<text x="${cx}" y="${cy+15}" text-anchor="middle" font-size="15" font-weight="700" fill="#7A6A52">${money(tot)}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:240px;margin:0 auto;display:block">${g}</svg>`;
+}
+function rankTable(rows, cols, maxKey){
+  const max=Math.max(...rows.map(r=>r[maxKey]),1);
+  let h=`<table><thead><tr>${cols.map(c=>`<th class="${c.num?'num':''}">${c.t}</th>`).join('')}</tr></thead><tbody>`;
+  rows.forEach((r,i)=>{
+    h+='<tr>';
+    cols.forEach(c=>{
+      let v=r[c.k];
+      if(c.k==='__rank') v=`<span class="rank">${i+1}</span>`+ (r.__label||'');
+      else if(c.money) v=fmt(v);
+      if(c.bar){const w=(r[maxKey]/max*100).toFixed(1);
+        h+=`<td class="num bar-cell"><div class="fill" style="width:${w}%"></div><span>${v}</span></td>`;}
+      else h+=`<td class="${c.num?'num':''}">${v}</td>`;
+    });
+    h+='</tr>';
+  });
+  return h+'</tbody></table>';
+}
+function legend(parts){return `<div class="legend">${parts.map((p,i)=>`<span><i style="background:${PAL[i%PAL.length]}"></i>${p.name}（${money(p.value)}）</span>`).join('')}</div>`;}
+function kpi(lab,val,sub,hl){return `<div class="kpi ${hl?'hl':''}"><div class="lab">${lab}</div><div class="val">${val}</div><div class="sub">${sub||''}</div></div>`;}
+
+// ---------- views ----------
+function vOverview(){
+  const s=DATA.sales,inv=DATA.inventory,f=DATA.finance;
+  let h=`<div class="kpis">
+    ${kpi('總營收','<small>NT$</small> '+money(s.kpi.revenue),s.kpi.docs+' 張銷貨單 · '+s.kpi.customers+' 客戶',true)}
+    ${kpi('庫存總值','<small>NT$</small> '+money(inv.kpi.value),inv.kpi.items+' 品項 · '+inv.kpi.categories+' 分類')}
+    ${kpi('應付帳款','<small>NT$</small> '+money(f.kpi.payable),f.kpi.vouchers+' 張憑單')}
+    ${kpi('應付未付餘額','<small>NT$</small> '+money(f.kpi.outstanding),'已付 '+money(f.kpi.paid))}
+  </div>`;
+  h+=`<div class="grid g2">
+    <div class="panel"><h3>營收 vs 應付　月趨勢</h3><div class="note">銷貨本幣金額 對比 應付憑單金額（按月）</div>
+      ${lineChart([
+        {name:'營收',color:'#C2A878',data:s.monthly.map(m=>({x:m.ym,y:m.amount}))},
+        {name:'應付',color:'#B8A589',data:f.ap_monthly.map(m=>({x:m.ym,y:m.payable}))}
+      ],{area:true})}
+      <div class="legend"><span><i style="background:#C2A878"></i>營收</span><span><i style="background:#B8A589"></i>應付</span></div>
+    </div>
+    <div class="panel"><h3>庫存結構</h3><div class="note">各品號分類庫存金額占比</div>
+      ${donut(inv.by_category.map(c=>({name:c.cat,value:c.value})))}
+      ${legend(inv.by_category.map(c=>({name:c.cat,value:c.value})))}
+    </div>
+  </div>`;
+  h+=`<div class="grid g11">
+    <div class="panel"><h3>前十大客戶（營收）</h3>
+      ${rankTable(s.top_customers.map(c=>({__label:c.name,amount:c.amount})),
+        [{k:'__rank',t:'客戶'},{k:'amount',t:'營收 NT$',num:true,money:true,bar:true}],'amount')}</div>
+    <div class="panel"><h3>前十大應付供應商</h3>
+      ${rankTable(f.top_vendors.map(v=>({__label:'供應商 '+v.vendor,payable:v.payable,unpaid:v.unpaid})),
+        [{k:'__rank',t:'供應商'},{k:'unpaid',t:'未付 NT$',num:true,money:true},{k:'payable',t:'應付 NT$',num:true,money:true,bar:true}],'payable')}</div>
+  </div>`;
+  return h;
+}
+function vFinance(){
+  const f=DATA.finance;
+  let h=`<div class="kpis">
+    ${kpi('總營收','<small>NT$</small> '+money(f.kpi.revenue),'銷貨收入合計',true)}
+    ${kpi('應付帳款','<small>NT$</small> '+money(f.kpi.payable),f.kpi.vouchers+' 張應付憑單')}
+    ${kpi('已付金額','<small>NT$</small> '+money(f.kpi.paid),'付款率 '+(f.kpi.paid/f.kpi.payable*100).toFixed(0)+'%')}
+    ${kpi('未付餘額','<small>NT$</small> '+money(f.kpi.outstanding),'待支付')}
+  </div>`;
+  h+=`<div class="panel" style="margin-bottom:18px"><h3>應付帳款　月趨勢</h3><div class="note">應付金額 vs 已付金額（按憑單日期）</div>
+    ${lineChart([
+      {name:'應付',color:'#A88C5F',data:f.ap_monthly.map(m=>({x:m.ym,y:m.payable}))},
+      {name:'已付',color:'#D8C4A0',data:f.ap_monthly.map(m=>({x:m.ym,y:m.paid}))}
+    ],{area:true,h:280})}
+    <div class="legend"><span><i style="background:#A88C5F"></i>應付</span><span><i style="background:#D8C4A0"></i>已付</span></div></div>`;
+  h+=`<div class="grid g11">
+    <div class="panel"><h3>營收　月趨勢</h3>
+      ${lineChart([{name:'營收',color:'#C2A878',data:f.rev_monthly.map(m=>({x:m.ym,y:m.amount}))}],{area:true})}</div>
+    <div class="panel"><h3>前十大應付供應商</h3>
+      ${rankTable(f.top_vendors.map(v=>({__label:'供應商 '+v.vendor,unpaid:v.unpaid,payable:v.payable})),
+        [{k:'__rank',t:'供應商'},{k:'unpaid',t:'未付 NT$',num:true,money:true},{k:'payable',t:'應付 NT$',num:true,money:true,bar:true}],'payable')}</div>
+  </div>`;
+  return h;
+}
+function vInventory(){
+  const inv=DATA.inventory;
+  let h=`<div class="kpis">
+    ${kpi('庫存總值','<small>NT$</small> '+money(inv.kpi.value),'全品項合計',true)}
+    ${kpi('品項數',fmt(inv.kpi.items),'品號主檔')}
+    ${kpi('有庫存品項',fmt(inv.kpi.instock),'庫存量或金額 > 0')}
+    ${kpi('品號分類',inv.kpi.categories+' 類','有庫存分類')}
+  </div>`;
+  h+=`<div class="grid g2">
+    <div class="panel"><h3>各分類庫存金額</h3><div class="note">依品號分類彙總</div>
+      ${donut(inv.by_category.map(c=>({name:c.cat,value:c.value})))}
+      ${legend(inv.by_category.map(c=>({name:c.cat,value:c.value})))}</div>
+    <div class="panel"><h3>分類明細</h3>
+      ${rankTable(inv.by_category.map(c=>({__label:c.cat,value:c.value,count:c.count})),
+        [{k:'__rank',t:'分類'},{k:'count',t:'品項數',num:true},{k:'value',t:'庫存金額 NT$',num:true,money:true,bar:true}],'value')}</div>
+  </div>`;
+  h+=`<div class="panel"><h3>庫存金額前十大品項</h3>
+    ${rankTable(inv.top_items.map(it=>({__label:it.name,cat:it.cat,qty:it.qty,value:it.value,pno:it.pno})),
+      [{k:'__rank',t:'品名'},{k:'pno',t:'品號'},{k:'cat',t:'分類'},{k:'qty',t:'庫存量',num:true,money:true},{k:'value',t:'庫存金額 NT$',num:true,money:true,bar:true}],'value')}</div>`;
+  return h;
+}
+function vSales(){
+  const s=DATA.sales;
+  let h=`<div class="kpis">
+    ${kpi('總營收','<small>NT$</small> '+money(s.kpi.revenue),'銷貨本幣金額',true)}
+    ${kpi('銷貨單數',fmt(s.kpi.docs),'張')}
+    ${kpi('平均客單價','<small>NT$</small> '+money(s.kpi.avg_order),'每張銷貨單')}
+    ${kpi('交易客戶數',fmt(s.kpi.customers),'家')}
+  </div>`;
+  h+=`<div class="panel" style="margin-bottom:18px"><h3>營收　月趨勢</h3><div class="note">每月銷貨金額（NT$）</div>
+    ${lineChart([{name:'營收',color:'#C2A878',data:s.monthly.map(m=>({x:m.ym,y:m.amount}))}],{area:true,h:280})}</div>`;
+  h+=`<div class="grid g11">
+    <div class="panel"><h3>前十大客戶</h3>
+      ${rankTable(s.top_customers.map(c=>({__label:c.name,amount:c.amount})),
+        [{k:'__rank',t:'客戶'},{k:'amount',t:'營收 NT$',num:true,money:true,bar:true}],'amount')}</div>
+    <div class="panel"><h3>業務員業績</h3>
+      ${rankTable(s.by_sales.map(v=>({__label:'業務 '+v.emp,amount:v.amount})),
+        [{k:'__rank',t:'業務員'},{k:'amount',t:'營收 NT$',num:true,money:true,bar:true}],'amount')}</div>
+  </div>`;
+  h+=`<div class="panel"><h3>暢銷商品（金額前十）</h3>
+    ${rankTable(s.top_products.map(p=>({__label:p.name,pno:p.pno,qty:p.qty,amount:p.amount})),
+      [{k:'__rank',t:'品名'},{k:'pno',t:'品號'},{k:'qty',t:'數量',num:true,money:true},{k:'amount',t:'銷售金額 NT$',num:true,money:true,bar:true}],'amount')}</div>`;
+  return h;
+}
+const VIEWS={overview:vOverview,finance:vFinance,inventory:vInventory,sales:vSales};
+function render(tab){document.getElementById('app').innerHTML=VIEWS[tab]();}
+document.getElementById('nav').addEventListener('click',e=>{
+  const t=e.target.closest('.tab'); if(!t)return;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active'); render(t.dataset.tab);
+});
+render('overview');
+</script>
+</body>
+</html>
