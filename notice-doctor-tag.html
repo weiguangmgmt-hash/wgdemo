@@ -79,6 +79,12 @@ ol.steps>li:last-child{padding-bottom:0}
 .sign{margin-top:26px;text-align:right;font-size:15px;line-height:1.9}
 .sign b{font-size:16px;letter-spacing:2px}
 
+.ref{display:inline-block;margin-left:8px;font-size:13px;color:var(--gold4);text-decoration:none;border-bottom:1px dashed var(--gold)}
+.appendix{margin-top:34px;padding-top:22px;border-top:3px double var(--gold2)}
+figure{margin:0 0 18px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+figure:last-child{margin-bottom:0}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:13.5px;color:#6B5F51;padding:8px 12px;border-top:1px solid var(--line);background:#FCFAF6}
 .toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
 .toolbar a{color:var(--gold4);font-size:13px;text-decoration:none;letter-spacing:1px}
 .toolbar a:hover{text-decoration:underline}
@@ -99,6 +105,9 @@ ol.steps>li:last-child{padding-bottom:0}
   .toolbar{display:none}
   .sheet{border:none;box-shadow:none;border-radius:0}
   section{break-inside:avoid}
+  .appendix{break-before:page;break-inside:auto;border-top:none;margin-top:0}
+  figure{break-inside:avoid}
+  .ref{border-bottom:none}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
@@ -184,7 +193,7 @@ ol.steps>li:last-child{padding-bottom:0}
           </li>
           <li>
             <div class="step-t">點「標籤」旁邊的鉛筆圖示 ✎</div>
-            <div class="step-d">「標籤」就在「主要服務」欄位的正下方。</div>
+            <div class="step-d">「標籤」就在「主要服務」欄位的正下方。<a class="ref" href="#fig1">見附圖一</a></div>
           </li>
           <li>
             <div class="step-t">在「標籤設定」視窗展開「門診相關」，勾選其中一個</div>
@@ -192,6 +201,7 @@ ol.steps>li:last-child{padding-bottom:0}
           </li>
           <li>
             <div class="step-t">按視窗右下角的 <span class="ui">儲存</span></div>
+            <div class="step-d"><a class="ref" href="#fig2">見附圖二</a></div>
           </li>
           <li>
             <div class="step-t">回到病歷，照平常流程按 <span class="ui">儲存</span> 或 <span class="ui">歸檔</span></div>
@@ -222,6 +232,18 @@ ol.steps>li:last-child{padding-bottom:0}
         如有任何疑問，請洽院長。<br>
         <b>唯光動物醫院　院長室</b>　敬啟
       </div>
+
+      <section class="appendix">
+        <h2><span class="no">附</span>附圖</h2>
+        <figure id="fig1">
+          <img src="assets/notice/step-tag-field.jpg" alt="病歷編輯畫面，紅框標示病歷資訊區塊中「標籤」欄位旁的鉛筆圖示">
+          <figcaption><b>附圖一</b>　病歷編輯畫面 → 門診 → 病歷資訊 → 點「標籤」旁的鉛筆圖示（步驟 3）</figcaption>
+        </figure>
+        <figure id="fig2">
+          <img src="assets/notice/step-tag-dialog.jpg" alt="標籤設定視窗，紅框標示門診相關分類中的「此次有指定醫師」勾選項與右下角的儲存按鈕">
+          <figcaption><b>附圖二</b>　標籤設定 → 展開「門診相關」→ 勾選其中一個 → 按「儲存」（步驟 4、5）</figcaption>
+        </figure>
+      </section>
     </div>
   </article>
 </div>
