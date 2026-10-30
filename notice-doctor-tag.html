@@ -66,9 +66,6 @@ ol.steps>li:last-child{padding-bottom:0}
 .step-t{font-weight:700}
 .step-d{color:#6B5F51;font-size:14.5px}
 .ui{display:inline-block;border:1px solid #CBD5DD;background:#F3F7FA;border-radius:4px;padding:0 7px;font-size:13.5px;color:#2B5D7A;white-space:nowrap}
-figure{margin:12px 0 4px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
-figure img{display:block;width:100%;height:auto}
-figcaption{font-size:12.5px;color:var(--muted);padding:6px 12px;border-top:1px solid var(--line);background:#FCFAF6}
 
 /* ---- 注意事項 ---- */
 .rules{list-style:none}
@@ -102,7 +99,6 @@ figcaption{font-size:12.5px;color:var(--muted);padding:6px 12px;border-top:1px s
   .toolbar{display:none}
   .sheet{border:none;box-shadow:none;border-radius:0}
   section{break-inside:avoid}
-  figure{break-inside:avoid}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 </style>
@@ -188,10 +184,7 @@ figcaption{font-size:12.5px;color:var(--muted);padding:6px 12px;border-top:1px s
           </li>
           <li>
             <div class="step-t">點「標籤」旁邊的鉛筆圖示 ✎</div>
-            <figure>
-              <img src="assets/notice/step-tag-field.jpg" alt="病歷編輯畫面，紅框標示病歷資訊區塊中「標籤」欄位旁的鉛筆圖示" loading="lazy">
-              <figcaption>圖一：病歷編輯畫面 → 病歷資訊 → 「標籤」旁的鉛筆圖示</figcaption>
-            </figure>
+            <div class="step-d">「標籤」就在「主要服務」欄位的正下方。</div>
           </li>
           <li>
             <div class="step-t">在「標籤設定」視窗展開「門診相關」，勾選其中一個</div>
@@ -199,10 +192,6 @@ figcaption{font-size:12.5px;color:var(--muted);padding:6px 12px;border-top:1px s
           </li>
           <li>
             <div class="step-t">按視窗右下角的 <span class="ui">儲存</span></div>
-            <figure>
-              <img src="assets/notice/step-tag-dialog.jpg" alt="標籤設定視窗，紅框標示門診相關分類中的「此次有指定醫師」勾選項與右下角的儲存按鈕" loading="lazy">
-              <figcaption>圖二：標籤設定 → 門診相關 → 勾選 → 儲存</figcaption>
-            </figure>
           </li>
           <li>
             <div class="step-t">回到病歷，照平常流程按 <span class="ui">儲存</span> 或 <span class="ui">歸檔</span></div>
