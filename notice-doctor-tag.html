@@ -1,253 +1,142 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>指定醫師標註公告 · 唯光動物醫院</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=720">
+<title>指定獸醫師標註｜公告</title>
+<!--
+  依唯光「公告」樣板製作：LINE 群組直接發的卡片式長圖（手機看）。
+  截圖：寬 720、2 倍（--force-device-scale-factor=2），輸出寬 1440 的 PNG。
+-->
 <style>
-:root{
-  --gold:#C2A878; --gold2:#D8C4A0; --gold4:#A88C5F;
-  --ink:#4A4036; --muted:#9A8E7C; --bg:#FAF7F2; --card:#FFFFFF;
-  --line:#ECE4D7; --shadow:0 6px 24px rgba(140,120,90,.10);
-  --yes:#E58E26; --no:#2E7D4F; --warn:#C0504D;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:"Noto Sans TC","PingFang TC","Helvetica Neue",Arial,sans-serif;
-  background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.7}
-.wrap{max-width:860px;margin:0 auto;padding:32px 16px 48px}
-.sheet{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
-
-/* ---- 公告抬頭 ---- */
-.head{text-align:center;padding:30px 24px 22px;border-bottom:3px double var(--gold2);background:linear-gradient(180deg,#fff,#FCF9F3)}
-.brand-en{font-family:"Cormorant Garamond",Georgia,serif;font-size:24px;letter-spacing:8px;color:var(--gold4);font-weight:600}
-.brand-zh{font-size:13px;letter-spacing:8px;color:var(--muted);margin-top:2px}
-.badge{display:inline-block;margin-top:16px;padding:4px 18px;border:1.5px solid var(--warn);color:var(--warn);
-  border-radius:4px;font-size:15px;font-weight:700;letter-spacing:10px;text-indent:10px}
-h1{font-size:26px;letter-spacing:2px;margin-top:12px;line-height:1.4}
-.meta{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 22px;margin-top:14px;font-size:13px;color:var(--muted)}
-.meta b{color:var(--ink);font-weight:600}
-
-.body{padding:26px 34px 30px}
-section{margin-bottom:30px}
-section:last-child{margin-bottom:0}
-h2{font-size:17px;letter-spacing:1px;display:flex;align-items:center;gap:10px;margin-bottom:12px;
-  padding-bottom:6px;border-bottom:1px solid var(--line)}
-h2 .no{flex:none;width:26px;height:26px;border-radius:7px;background:var(--gold);color:#fff;font-size:14px;
-  display:inline-flex;align-items:center;justify-content:center}
-p{font-size:15px}
-.lead{font-size:15.5px}
-.hl{background:linear-gradient(transparent 60%,#F6E7C8 60%);font-weight:700}
-
-/* ---- 兩種標籤 ---- */
-.tags{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
-.tagcard{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:#FDFBF7}
-.chip{display:inline-block;color:#fff;font-size:13px;font-weight:700;padding:2px 10px;border-radius:4px;letter-spacing:1px}
-.chip.yes{background:var(--yes)} .chip.no{background:var(--no)}
-.tagcard.yes{border-top:4px solid var(--yes)} .tagcard.no{border-top:4px solid var(--no)}
-.tc-h{font-weight:700;font-size:16px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-.mark{width:22px;height:22px;border-radius:50%;color:#fff;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
-.yes .mark{background:var(--yes)} .no .mark{background:var(--no)}
-.tagcard ul{margin-top:10px;padding-left:20px;font-size:14.5px}
-.tagcard li{margin-bottom:5px}
-.rule-box{display:flex;gap:14px;align-items:stretch;border:1px solid var(--gold2);border-radius:12px;overflow:hidden;margin-bottom:14px}
-.rule-k{flex:none;background:var(--gold);color:#fff;font-weight:700;letter-spacing:2px;padding:12px 14px;display:flex;align-items:center;writing-mode:horizontal-tb}
-.rule-v{padding:10px 14px 10px 0;font-size:16px}
-.rule-v span{display:block;font-size:13.5px;color:var(--muted)}
-.tip{margin-top:12px;font-size:14.5px;background:#FDFAF3;border-radius:10px;padding:10px 14px}
-
-/* ---- 步驟 ---- */
-ol.steps{list-style:none;counter-reset:s}
-ol.steps>li{counter-increment:s;position:relative;padding:0 0 18px 46px;font-size:15px}
-ol.steps>li::before{content:counter(s);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;
-  border:2px solid var(--gold);color:var(--gold4);font-weight:700;display:flex;align-items:center;justify-content:center;background:#fff}
-ol.steps>li::after{content:"";position:absolute;left:14px;top:32px;bottom:2px;border-left:2px dotted var(--gold2)}
-ol.steps>li:last-child::after{display:none}
-ol.steps>li:last-child{padding-bottom:0}
-.step-t{font-weight:700}
-.step-d{color:#6B5F51;font-size:14.5px}
-.ui{display:inline-block;border:1px solid #CBD5DD;background:#F3F7FA;border-radius:4px;padding:0 7px;font-size:13.5px;color:#2B5D7A;white-space:nowrap}
-
-/* ---- 注意事項 ---- */
-.rules{list-style:none}
-.rules li{position:relative;padding-left:26px;margin-bottom:8px;font-size:15px}
-.rules li::before{content:"!";position:absolute;left:0;top:3px;width:18px;height:18px;border-radius:50%;background:var(--warn);
-  color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.formula{margin-top:10px;border:1px dashed var(--gold);border-radius:12px;padding:14px 18px;background:#FDFAF3;font-size:15px;text-align:center}
-.formula .eq{font-size:16.5px;font-weight:700;margin:4px 0}
-.formula small{display:block;color:var(--muted);font-size:13px;margin-top:4px}
-
-.sign{margin-top:26px;text-align:right;font-size:15px;line-height:1.9}
-.sign b{font-size:16px;letter-spacing:2px}
-
-.ref{display:inline-block;margin-left:8px;font-size:13px;color:var(--gold4);text-decoration:none;border-bottom:1px dashed var(--gold)}
-.appendix{margin-top:34px;padding-top:22px;border-top:3px double var(--gold2)}
-figure{margin:0 0 18px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
-figure:last-child{margin-bottom:0}
-figure img{display:block;width:100%;height:auto}
-figcaption{font-size:13.5px;color:#6B5F51;padding:8px 12px;border-top:1px solid var(--line);background:#FCFAF6}
-.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.toolbar a{color:var(--gold4);font-size:13px;text-decoration:none;letter-spacing:1px}
-.toolbar a:hover{text-decoration:underline}
-.btn{border:1px solid var(--gold);background:#fff;color:var(--gold4);border-radius:999px;padding:7px 18px;font-size:13px;cursor:pointer;letter-spacing:1px}
-.btn:hover{background:var(--gold);color:#fff}
-
-@media(max-width:640px){
-  .body{padding:22px 18px 24px}
-  h1{font-size:21px}
-  .tags{grid-template-columns:1fr}
-  .rule-box{flex-direction:column;gap:0}
-  .rule-v{padding:10px 14px}
-}
-@media print{
-  @page{size:A4;margin:12mm}
-  body{background:#fff}
-  .wrap{padding:0;max-width:none}
-  .toolbar{display:none}
-  .sheet{border:none;box-shadow:none;border-radius:0}
-  section{break-inside:avoid}
-  .appendix{break-before:page;break-inside:auto;border-top:none;margin-top:0}
-  figure{break-inside:avoid}
-  .ref{border-bottom:none}
-  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
+  :root{--navy:#3C4C65;--gold:#B79167;--cream:#F4EDE1;--bg:#F6F1E8;--ink:#2B2B2B;--grey:#6B7280;--line:#E5DAC4;--hl:#3C5A8A}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--bg)}
+  body{width:720px;margin:0 auto;background:var(--bg);color:var(--ink);font-family:"Noto Serif TC","Microsoft JhengHei","微軟正黑體",serif;font-size:15.5px;line-height:1.85;position:relative}
+  .wm{position:absolute;top:900px;left:50%;width:640px;transform:translateX(-50%);opacity:.55;z-index:0;pointer-events:none}
+  header{background:var(--navy);display:flex;align-items:center;gap:22px;padding:30px 34px 28px}
+  header img{width:96px}
+  header h1{color:#fff;font-size:31px;font-weight:600;letter-spacing:4px;line-height:1.3}
+  header .date{display:inline-block;margin-top:12px;background:var(--gold);color:#fff;font-size:19px;letter-spacing:3px;padding:6px 18px;border-radius:24px}
+  main{padding:22px 24px 6px;position:relative;z-index:1}
+  .card{background:rgba(255,255,255,.93);border:1px solid var(--line);border-radius:14px;padding:22px 24px 20px;margin-bottom:18px}
+  .card h2{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:600;color:var(--navy);letter-spacing:2px;margin-bottom:10px}
+  .card h2 .no{flex:0 0 34px;height:34px;border-radius:50%;background:var(--gold);color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;letter-spacing:0}
+  .card p{margin:4px 0}
+  .goal{background:var(--navy);color:#fff;text-align:center;border-radius:8px;padding:14px 18px;margin-top:12px;line-height:1.75}
+  .flow{display:flex;align-items:center;gap:6px;margin:6px 0 10px;flex-wrap:nowrap}
+  .flow .s{flex:1 1 0;min-height:62px;border:1px solid var(--gold);background:#FBF8F2;border-radius:8px;font-size:12.5px;line-height:1.45;color:var(--navy);display:flex;align-items:center;justify-content:center;text-align:center;padding:4px}
+  .flow .s.w{flex-grow:1.5}
+  .flow .s.dark{background:var(--navy);border-color:var(--navy);color:#fff}
+  .flow .ar{color:var(--gold);font-size:12px}
+  ul{padding-left:20px}
+  li{margin:3px 0}
+  li::marker{color:var(--navy)}
+  .hl{color:var(--hl)}
+  .note{background:#F1E7D7;border-left:4px solid var(--gold);border-radius:4px;padding:10px 16px;margin-top:12px;line-height:1.75}
+  .sub{background:#FBF7EF;border-radius:8px;padding:12px 16px;margin-top:8px}
+  .sub .t{color:var(--navy)}
+  .rows{margin-top:4px}
+  .rows .r{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid var(--line)}
+  .rows .r:last-child{border-bottom:none}
+  .pill{flex:0 0 auto;font-size:13px;padding:2px 14px;border-radius:14px;background:#EEF0F4;color:var(--navy)}
+  .pill.rec{background:#F1E7D7;color:var(--gold)}
+  .pill.must{background:var(--navy);color:#fff}
+  footer{text-align:center;color:var(--grey);font-size:13px;padding:10px 0 24px;position:relative;z-index:1}
+  /* 本公告另加：系統標籤原色（對照病歷畫面）、截圖 */
+  .tag{display:inline-block;color:#fff;font-size:13px;line-height:1.6;padding:0 8px;border-radius:4px;margin:0 2px}
+  .tag.yes{background:#E58E26}
+  .tag.no{background:#2E7D4F}
+  .sub .t .tag{margin-left:6px;vertical-align:1px}
+  .shot{margin-top:12px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
+  .shot img{display:block;width:100%}
+  .shot .cap{font-size:12.5px;color:var(--grey);padding:4px 12px;border-top:1px solid var(--line);background:#FBF8F2}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="toolbar">
-    <a href="index.html">← 回營運儀表板</a>
-    <button class="btn" onclick="window.print()">列印公告</button>
+<img class="wm" src="assets/notice/watermark.png" alt="">
+<header>
+  <img src="assets/notice/logo_gold.svg" alt="">
+  <div>
+    <h1>指定獸醫師標註｜公告</h1>
+    <div class="date">11/1 起實施</div>
   </div>
+</header>
 
-  <article class="sheet">
-    <header class="head">
-      <div class="brand-en">WEI GUANG</div>
-      <div class="brand-zh">唯 光 動 物 醫 院</div>
-      <div class="badge">公告</div>
-      <h1>病歷「指定醫師」標籤標註作業說明</h1>
-      <div class="meta">
-        <span>公告對象：<b>櫃台及診間助理</b></span>
-        <span>公告日期：<b>2026 年 10 月 30 日</b></span>
-        <span>生效日期：<b>2026 年 11 月 1 日起</b></span>
-      </div>
-    </header>
+<main>
+  <section class="card">
+    <h2><span class="no">一</span>為什麼要做</h2>
+    <p>飼主願意<span class="hl">指名</span>某位獸醫師，代表信任他的專業與服務。指定率是對獸醫師肯定的重要指標，但以前沒有紀錄，不知道每位獸醫師被指定的情況。</p>
+    <div class="goal">11/1 起，每一筆病歷都要標註「有沒有指定獸醫師」，<br>之後會納入 KPI</div>
+  </section>
 
-    <div class="body">
-      <section>
-        <h2><span class="no">一</span>公告事項</h2>
-        <p class="lead">
-          <span class="hl">自 2026 年 11 月 1 日起</span>，每一筆病歷都要在「標籤」欄位標註
-          <span class="chip yes">此次有指定醫師</span> 或 <span class="chip no">此次未指定醫師</span>，
-          用來統計各位醫師的<b>「醫師指定率」</b>。
-          不論主要服務是<b>看診、手術、檢驗或取藥</b>，都一樣要標。
-        </p>
-      </section>
-
-      <section>
-        <h2><span class="no">二</span>什麼情況算「指定」？</h2>
-        <div class="rule-box">
-          <div class="rule-k">判斷原則</div>
-          <div class="rule-v">飼主有沒有<b>主動說出</b>要哪一位醫師。<br>
-            <span>飼主主動選 → 有指定；院方安排、飼主沒意見，或是被我們引導 → 未指定</span></div>
-        </div>
-        <div class="tags">
-          <div class="tagcard yes">
-            <div class="tc-h"><span class="mark">✓</span>算指定 <span class="chip yes">此次有指定醫師</span></div>
-            <ul>
-              <li>預約（電話、LINE、線上）時說要掛某位醫師</li>
-              <li>到櫃台時主動說「我要給 ○ 醫師看」</li>
-              <li>主動問「上次那位醫師今天在嗎？」並要給他看</li>
-              <li>朋友介紹、看網路評價，指名某位醫師</li>
-              <li>回診時飼主要求同一位醫師</li>
-              <li>手術、檢驗時，飼主指定由某位醫師執行</li>
-              <li>取藥時，飼主指定由某位醫師開藥</li>
-            </ul>
-          </div>
-          <div class="tagcard no">
-            <div class="tc-h"><span class="mark">✕</span>不算指定 <span class="chip no">此次未指定醫師</span></div>
-            <ul>
-              <li>飼主說「都可以」「哪位有空就哪位」</li>
-              <li>現場候診，由院內安排醫師</li>
-              <li>飼主想找的醫師當天不在，改看其他醫師</li>
-              <li>原本指定 A 醫師，最後由 B 醫師完成（例如 A 醫師臨時有事、手術改由其他醫師執刀）</li>
-              <li>助理先提醫師名字（例如「給王醫師看好嗎？」），飼主才說好</li>
-              <li>醫師上次交代回診，由院內直接排同一位醫師，飼主沒有特別要求</li>
-              <li>只來取藥，飼主沒有指定醫師</li>
-              <li>急診，飼主來不及選醫師</li>
-            </ul>
-          </div>
-        </div>
-        <p class="tip">💡 不確定時，請當場再問飼主一次：「請問今天有想指定哪一位醫師嗎？」飼主說出名字才算指定。</p>
-      </section>
-
-      <section>
-        <h2><span class="no">三</span>操作步驟</h2>
-        <ol class="steps">
-          <li>
-            <div class="step-t">掛號（或接預約）時先問飼主</div>
-            <div class="step-d">「請問今天有想指定哪一位醫師嗎？」<br>
-              請照這句話問，不要先說醫師名字，以免引導飼主。</div>
-          </li>
-          <li>
-            <div class="step-t">開啟該筆病歷的編輯畫面，確認「主要服務」</div>
-            <div class="step-d">在 <span class="ui">門診</span> 分頁的「病歷資訊」，確認 <span class="ui">主要服務</span>（一般看診／手術／檢驗／取藥…）和 <span class="ui">看診醫師</span> 都正確。</div>
-          </li>
-          <li>
-            <div class="step-t">點「標籤」旁邊的鉛筆圖示 ✎</div>
-            <div class="step-d">「標籤」就在「主要服務」欄位的正下方。<a class="ref" href="#fig1">見附圖一</a></div>
-          </li>
-          <li>
-            <div class="step-t">在「標籤設定」視窗展開「門診相關」，勾選其中一個</div>
-            <div class="step-d">勾 <span class="chip yes">此次有指定醫師</span> 或 <span class="chip no">此次未指定醫師</span>，<b>只能勾一個</b>。</div>
-          </li>
-          <li>
-            <div class="step-t">按視窗右下角的 <span class="ui">儲存</span></div>
-            <div class="step-d"><a class="ref" href="#fig2">見附圖二</a></div>
-          </li>
-          <li>
-            <div class="step-t">回到病歷，照平常流程按 <span class="ui">儲存</span> 或 <span class="ui">歸檔</span></div>
-            <div class="step-d">完成後，左邊「病歷紀錄」清單中的這筆病歷下方會出現
-              <span class="chip yes">此次有指定醫師</span>（橘色）或
-              <span class="chip no">此次未指定醫師</span>（綠色），看到標籤才算完成。</div>
-          </li>
-        </ol>
-      </section>
-
-      <section>
-        <h2><span class="no">四</span>注意事項</h2>
-        <ul class="rules">
-          <li><b>每一筆病歷都要標</b>，沒有標的病歷無法列入統計。</li>
-          <li>兩個標籤<b>只能勾一個</b>，不要兩個都勾，也不要都不勾。</li>
-          <li>「看診醫師」欄位一律填<b>實際完成</b>這次服務的醫師；中途換醫師的話，要記得改這一欄，標籤也要改成「此次未指定醫師」。</li>
-          <li>同一位飼主帶多隻寵物，<b>每一隻的病歷都要分別標</b>。</li>
-          <li>標錯時，回到病歷點鉛筆圖示 ✎ 重新勾選，再按儲存即可。</li>
-          <li>每天下班前，請櫃台檢查當日的病歷紀錄，確認每一筆都有橘色或綠色標籤。</li>
-        </ul>
-        <div class="formula">
-          統計方式（供參考）
-          <div class="eq">醫師指定率 ＝ 該醫師「此次有指定醫師」病歷數 ÷ 該醫師全部病歷數 × 100%</div>
-          <small>會依「看診醫師」與「主要服務」（看診／手術／檢驗／取藥）分別統計</small>
-        </div>
-      </section>
-
-      <div class="sign">
-        如有任何疑問，請洽院長。<br>
-        <b>唯光動物醫院　院長室</b>　敬啟
-      </div>
-
-      <section class="appendix">
-        <h2><span class="no">附</span>附圖</h2>
-        <figure id="fig1">
-          <img src="assets/notice/step-tag-field.jpg" alt="病歷編輯畫面，紅框標示病歷資訊區塊中「標籤」欄位旁的鉛筆圖示">
-          <figcaption><b>附圖一</b>　病歷編輯畫面 → 門診 → 病歷資訊 → 點「標籤」旁的鉛筆圖示（步驟 3）</figcaption>
-        </figure>
-        <figure id="fig2">
-          <img src="assets/notice/step-tag-dialog.jpg" alt="標籤設定視窗，紅框標示門診相關分類中的「此次有指定醫師」勾選項與右下角的儲存按鈕">
-          <figcaption><b>附圖二</b>　標籤設定 → 展開「門診相關」→ 勾選其中一個 → 按「儲存」（步驟 4、5）</figcaption>
-        </figure>
-      </section>
+  <section class="card">
+    <h2><span class="no">二</span>什麼算指定</h2>
+    <p>只看一件事：<span class="hl">飼主有沒有主動說出要哪一位獸醫師</span></p>
+    <div class="sub">
+      <p class="t">✓ 算指定<span class="tag yes">此次有指定醫師</span></p>
+      <ul>
+        <li>預約時（電話、LINE、線上）說要掛某位獸醫師</li>
+        <li>到櫃台主動說「我要給 ○ 醫師看」</li>
+        <li>主動問上次那位獸醫師在不在，並要給他看</li>
+        <li>朋友介紹、看網路評價，來指名某位獸醫師</li>
+        <li>回診時，飼主要求同一位獸醫師</li>
+        <li>手術、檢驗、取藥時，飼主指定由某位獸醫師處理</li>
+      </ul>
     </div>
-  </article>
-</div>
+    <div class="sub">
+      <p class="t">✕ 不算指定<span class="tag no">此次未指定醫師</span></p>
+      <ul>
+        <li>飼主說「都可以」「哪位有空就哪位」</li>
+        <li>現場候診，由院內安排獸醫師</li>
+        <li>獸醫助理先提名字（例如「給王醫師看好嗎？」），飼主才說好</li>
+        <li>獸醫師上次交代回診，院內直接排同一位，飼主沒有特別要求</li>
+        <li><span class="hl">原本指定 A 獸醫師，最後由 B 獸醫師完成</span><br>例：A 當天不在、等候太久飼主改看別位、A 臨時有事改由別位執刀</li>
+        <li>急診，飼主來不及選獸醫師</li>
+      </ul>
+    </div>
+    <div class="note">不確定時，請當場問飼主：「請問今天有想指定哪一位醫師嗎？」<br>請照這句話問，不要先說名字；飼主說出名字才算指定。</div>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">三</span>怎麼標</h2>
+    <div class="flow">
+      <div class="s w">開啟病歷<br>編輯畫面</div><span class="ar">→</span>
+      <div class="s w">確認主要服務<br>看診醫師</div><span class="ar">→</span>
+      <div class="s">點標籤<br>鉛筆 ✎</div><span class="ar">→</span>
+      <div class="s dark w">門診相關<br>勾選一個</div><span class="ar">→</span>
+      <div class="s">按<br>儲存</div><span class="ar">→</span>
+      <div class="s dark">確認<br>標籤出現</div>
+    </div>
+    <ul>
+      <li>在病歷編輯畫面「門診」分頁的<span class="hl">病歷資訊</span>，先確認主要服務（看診／手術／檢驗／取藥）和看診醫師正確</li>
+      <li>點<span class="hl">「標籤」旁的鉛筆 ✎</span>，在「標籤設定」展開<span class="hl">門診相關</span></li>
+      <li>勾<span class="tag yes">此次有指定醫師</span>或<span class="tag no">此次未指定醫師</span>，<span class="hl">只能勾一個</span>，再按右下角「儲存」</li>
+      <li>回到病歷照平常儲存或歸檔；左邊病歷紀錄出現<span class="hl">橘色或綠色標籤</span>才算完成</li>
+    </ul>
+    <div class="shot">
+      <img src="assets/notice/step-tag-field.jpg" alt="病歷編輯畫面，紅框標示「標籤」旁的鉛筆圖示">
+      <div class="cap">① 病歷資訊 →「標籤」旁的鉛筆 ✎</div>
+    </div>
+    <div class="shot">
+      <img src="assets/notice/step-tag-dialog.jpg" alt="標籤設定視窗，紅框標示門診相關的勾選項與儲存按鈕">
+      <div class="cap">② 標籤設定 → 門診相關 → 勾選 → 儲存</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="no">四</span>注意事項</h2>
+    <div class="rows">
+      <div class="r"><span>每一筆病歷都要標，看診、手術、檢驗、取藥都一樣</span><span class="pill must">必標</span></div>
+      <div class="r"><span>兩個標籤只能勾一個，不要都勾、也不要都不勾</span><span class="pill rec">二選一</span></div>
+      <div class="r"><span>看診醫師填<span class="hl">實際完成</span>的獸醫師；<br>中途換獸醫師，標籤也要改成未指定</span><span class="pill must">要照實</span></div>
+      <div class="r"><span>同一位飼主帶多隻寵物，每一隻的病歷分別標</span><span class="pill">分別標</span></div>
+      <div class="r"><span>標錯了：點 ✎ 重新勾選，再按儲存</span><span class="pill">可修改</span></div>
+      <div class="r"><span>每天下班前，櫃台檢查當日病歷是否都有標籤</span><span class="pill rec">每日</span></div>
+    </div>
+    <div class="note">指定率＝該獸醫師「有指定」病歷數 ÷ 該獸醫師全部病歷數，依主要服務分別統計。<br>如有任何問題，請隨時與我聯繫。</div>
+  </section>
+</main>
+<footer>唯光動物醫院</footer>
 </body>
 </html>
